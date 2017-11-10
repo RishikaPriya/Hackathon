@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "900837740879",
+    "firebase_url": "https://barclaycard-4564d.firebaseio.com",
+    "project_id": "barclaycard-4564d",
+    "storage_bucket": "barclaycard-4564d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900837740879:android:43b4422e70fff94d",
+        "android_client_info": {
+          "package_name": "com.example.rishikapriya.barclaycard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900837740879-dtpsm68db9gnmf9kr6se36j9c4kj51tj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi7DSqy0zLRLCjdbThLRB-hqkd5g04Cvc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
