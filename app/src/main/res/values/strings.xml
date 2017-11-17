@@ -19,4 +19,17 @@
         completions."
     </string>
 
+
+    <string name="shopping_offer">Shopping &amp; Offers</string>
+    <string name="recharge">Recharge</string>
+    <string name="fund_transfer">Fund Transfer</string>
+    <string name="account">Account</string>
+    <string name="flight_booking">Flight Booking</string>
+    <string name="bill_payment">Bill Payment</string>
+    <string name="account_summary">Account Summary</string>
+    <string name="my_deals">My Deals</string>
+    <string name="payments">Payments</string>
+    <string name="transactions">Transactions</string>
+    <string name="rewards">Rewards</string>
+    <string name="manage_notification">Manage Notification</string>
 </resources>

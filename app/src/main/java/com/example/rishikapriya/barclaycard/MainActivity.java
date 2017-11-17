@@ -13,6 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.rishikapriya.barclaycard.deals.MyOffersFragment;
+import com.example.rishikapriya.barclaycard.summary.Account;
+import com.example.rishikapriya.barclaycard.summary.AccountSummaryFragment;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -39,6 +43,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        showMyOffersFragment();
+    }
+
+    private void showMyOffersFragment() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, MyOffersFragment.newInstance(),MyOffersFragment.class.toString()).commit();
+    }
+
+    private void showAccountSummaryFragment() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, AccountSummaryFragment.newInstance(new Account()),AccountSummaryFragment.class.toString());
+    }
+
+    private void pushFragment() {
     }
 
     @Override
@@ -79,19 +95,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-       /* if (id == R.id.nav_camera) {
+        if (id == R.id.nav_summary) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_deals) {
+            showMyOffersFragment();
+        } else if (id == R.id.nav_notification) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_payments) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_rewards) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_transactions) {
 
-        } else if (id == R.id.nav_send) {
-
-        }*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

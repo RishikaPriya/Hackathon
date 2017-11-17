@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dimen_10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:weightSum="2"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_account"
+                android:layout_weight="1"
+                android:background="@drawable/background"
+                android:layout_margin="@dimen/dimen_10dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_60dp"
+                    android:src="@mipmap/ic_people_outline"
+                    android:tint="@color/grey_blue_dark"
+                    android:id="@+id/img_account"
+                    android:layout_marginTop="30dp"
+                    />
+                <TextView
+                    android:id="@+id/accounts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/account"
+                    android:layout_below="@id/img_account"
+                    android:paddingTop="@dimen/dimen_2dp"
+                    android:textSize="16sp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_fund_transfer"
+                android:layout_weight="1"
+                android:background="@drawable/background"
+                android:layout_margin="@dimen/dimen_10dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_60dp"
+                    android:src="@mipmap/ic_send_money"
+                    android:id="@+id/img_fund_transfer"
+                    android:layout_marginTop="30dp" />
+                <TextView
+                    android:id="@+id/fund_transfer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fund_transfer"
+                    android:layout_below="@id/img_fund_transfer"
+                    android:paddingTop="@dimen/dimen_2dp"
+                    android:textSize="16sp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/background"
+                android:layout_margin="@dimen/dimen_10dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_60dp"
+                    android:src="@mipmap/ic_recharge"
+                    android:id="@+id/img_recharge"
+                    android:layout_marginTop="30dp" />
+                <TextView
+                    android:id="@+id/tv_recharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recharge"
+                    android:layout_below="@id/img_recharge"
+                    android:paddingTop="@dimen/dimen_2dp"
+                    android:textSize="16sp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/background"
+                android:layout_margin="@dimen/dimen_10dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_60dp"
+                    android:src="@mipmap/ic_shopping_basket"
+                    android:tint="@color/grey_blue_dark"
+                    android:id="@+id/img_offer"
+                    android:layout_marginTop="30dp" />
+                <TextView
+                    android:id="@+id/tv_offers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shopping_offer"
+                    android:layout_below="@id/img_offer"
+                    android:paddingTop="@dimen/dimen_2dp"
+                    android:textSize="16sp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background"
+                android:layout_margin="@dimen/dimen_10dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_60dp"
+                    android:src="@mipmap/ic_bill"
+                    android:id="@+id/img_bill"
+                    android:layout_marginTop="30dp" />
+                <TextView
+                    android:id="@+id/tv_billing_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bill_payment"
+                    android:layout_below="@id/img_bill"
+                    android:paddingTop="@dimen/dimen_2dp"
+                    android:textSize="16sp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/background"
+                android:layout_margin="@dimen/dimen_10dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_60dp"
+                    android:id="@+id/img_flight"
+                    android:layout_marginTop="30dp"
+                    android:tint="@color/grey_blue_dark"
+                    android:src="@mipmap/ic_flight_takeoff"/>
+                <TextView
+                    android:id="@+id/tv_flight_booking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/flight_booking"
+                    android:layout_below="@id/img_flight"
+                    android:paddingTop="@dimen/dimen_2dp"
+                    android:textSize="16sp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
