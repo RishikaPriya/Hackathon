@@ -9,7 +9,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
  * Created by rishikapriya on 10/11/17.
  */
 
-//TOKEN: fLg5161JP3Q:APA91bHbqMcnpdY5EBbha3Mrq2gIix8dKo62YPlvwt2zkutYtuw-Iq78-g-ET2V8hXmT0-GuC-ypuhWPkn4B1VlD5rA2K5rOY-532d9r0buFJa9WxYl4xj1SyuJK3EBaehkLNpgd2U_R
+//TOKEN: euYYSP0qG8o:APA91bFvoA-HGVXtQO4As8QcT8D5uSXyyqoixwEQLGbCgKJem318QpCEvy9QU42-Dbd9nHWvySB-QIdYiH_MUjLrPVeBwTbW85N41eLtEYdGZ3HZ58Ky8B_whj921U1wtgEjMttyfmSM
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 

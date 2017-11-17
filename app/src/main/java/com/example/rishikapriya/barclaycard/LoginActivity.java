@@ -1,9 +1,9 @@
 package com.example.rishikapriya.barclaycard;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,6 +27,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.android.volley.VolleyError;
+import com.example.rishikapriya.barclaycard.Security.Security;
+import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
+import com.example.rishikapriya.barclaycard.model.OAuthAccessToken;
+import com.example.rishikapriya.barclaycard.service.LoginService;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
+    private ProgressDialog mProgressDialog;
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -86,6 +95,44 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        getAppAccessToken();
+
+        setDeviceInstanceId();
+    }
+
+    private void setDeviceInstanceId() {
+        TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Security.getInstance().setDeviceId(manager.getDeviceId());
+    }
+
+    private void getAppAccessToken() {
+        String authorizationHeader = "Basic Qk5KY1h0RzdEZTFFRlJzc1JHTjJ5NTJnYkQ4YTpFelozZkJiTWVZeTQwQ254d1NDSkJKSVZuTG9h";
+        Security.getInstance().setAuthorizationKey(authorizationHeader);
+
+        LoginService.getAppAccessToken(new WebResponseListener() {
+            @Override
+            public void onReceiveResponse(Object response) {
+                Gson gson =  new Gson();
+                OAuthAccessToken authAccessToken = gson.fromJson(response.toString(),OAuthAccessToken.class);
+                Security.getInstance().setAccessToken(authAccessToken.accessToken);
+            }
+
+            @Override
+            public void onReceiveError(VolleyError volleyError) {
+
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -175,9 +222,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            showProgressDialog("loading");
+            LoginService.loginService("demouser15077694970000", "Abc@123456", new WebResponseListener() {
+                @Override
+                public void onReceiveResponse(Object response) {
+                    Gson gson =  new Gson();
+                    OAuthAccessToken authAccessToken = gson.fromJson(response.toString(),OAuthAccessToken.class);
+                    successfulLogin();
+                }
+
+                @Override
+                public void onReceiveError(VolleyError volleyError) {
+
+                }
+            });
 
         }
     }
@@ -192,39 +250,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         return password.length() > 4;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+    protected void showProgressDialog(String message) {
+        mProgressDialog = ProgressDialog.show(this, "", message);
+    }
+    protected void hideProgressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
         }
     }
 
@@ -271,6 +302,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         mEmailView.setAdapter(adapter);
     }
 
+
+    private void successfulLogin() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 
     private interface ProfileQuery {
         String[] PROJECTION = {
