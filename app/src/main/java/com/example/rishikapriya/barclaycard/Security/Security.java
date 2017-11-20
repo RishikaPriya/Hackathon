@@ -10,6 +10,7 @@ public class Security {
     public String deviceId;
     public String userAccessToken;
     public String accessToken;
+    public String walletCode;
 
     public static Security getInstance(){
         if(instance == null){
@@ -48,5 +49,13 @@ public class Security {
 
     public void setUserAccessToken(String userAccessToken) {
         this.userAccessToken = userAccessToken;
+    }
+
+    public String getWalletCode() {
+        return walletCode;
+    }
+
+    public void setWalletCode(String walletCode) {
+        this.walletCode = walletCode;
     }
 }

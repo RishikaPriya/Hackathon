@@ -40,46 +40,6 @@ public class ServerCommunication {
     public void addJSONPostRequest(String url, final Map<String,String> headers, final Map<String,String> request,
                                    final WebResponseListener webResponseListener){
 
-        /*StringRequest jsonObjectRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                CommonUtils.debug("RESP",response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                return object;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return headers;
-            }
-
-            *//*@Override
-            public byte[] getBody() {
-
-
-                String httpPostBody="grant_type=client_credentials&scope=PRODUCTION";
-                // usually you'd have a field with some values you'd want to escape, you need to do it yourself if overriding getBody. here's how you do it
-                try {
-                    httpPostBody=httpPostBody+"&randomFieldFilledWithAwkwardCharacters="+
-                            URLEncoder.encode("{{%stuffToBe Escaped/","UTF-8");
-                } catch (UnsupportedEncodingException exception) {
-                    CommonUtils.error("ERROR", "exception" + exception);
-                    // return null and don't pass any POST string if you encounter encoding error
-                    return null;
-                }
-                return httpPostBody.getBytes();
-            }*//*
-        };*/
-
         JsonObjectRequest jsonObjectRequest =
                 new JsonObjectRequest(
                         Request.Method.POST,
@@ -109,6 +69,26 @@ public class ServerCommunication {
                         return httpPostBody.getBytes();
                     }
 
+
+                };
+
+        ApplicationController.getInstance().getRequestQueue().add(jsonObjectRequest);
+    }
+
+    public void addJSONPostRequestWithParameters(String url, final Map<String,String> headers, final Map<String,String> request,
+                                   final WebResponseListener webResponseListener){
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        url,new JSONObject(request),
+                        new ResponseListener(webResponseListener),
+                        new ErrorListener(webResponseListener)){
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        return headers;
+                    }
 
                 };
 

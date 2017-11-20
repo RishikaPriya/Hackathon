@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rishikapriya.barclaycard.R;
+import com.example.rishikapriya.barclaycard.model.Account;
 
 /**
  * Created by rishikapriya on 17/11/17.
@@ -27,19 +28,19 @@ public class AccountSummaryFragment extends Fragment {
         return fragment;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.account_summary, null, false);
-        return view;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arg = getArguments();
 
         account = (Account) arg.getSerializable("account");
+    }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.account_summary, null, false);
+
+        return view;
     }
 }

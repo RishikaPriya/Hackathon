@@ -1,4 +1,4 @@
-package com.example.rishikapriya.barclaycard.summary;
+package com.example.rishikapriya.barclaycard.model;
 
 import java.io.Serializable;
 

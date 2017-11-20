@@ -31,7 +31,8 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.example.rishikapriya.barclaycard.Security.Security;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
-import com.example.rishikapriya.barclaycard.model.OAuthAccessToken;
+import com.example.rishikapriya.barclaycard.constants.Constants;
+import com.example.rishikapriya.barclaycard.model.OAuthAccessTokenResponse;
 import com.example.rishikapriya.barclaycard.service.LoginService;
 import com.google.gson.Gson;
 
@@ -117,15 +118,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     private void getAppAccessToken() {
-        String authorizationHeader = "Basic Qk5KY1h0RzdEZTFFRlJzc1JHTjJ5NTJnYkQ4YTpFelozZkJiTWVZeTQwQ254d1NDSkJKSVZuTG9h";
-        Security.getInstance().setAuthorizationKey(authorizationHeader);
+        Security.getInstance().setAuthorizationKey(Constants.AUTHORIZATION_HEADER);
 
         LoginService.getAppAccessToken(new WebResponseListener() {
             @Override
             public void onReceiveResponse(Object response) {
                 Gson gson =  new Gson();
-                OAuthAccessToken authAccessToken = gson.fromJson(response.toString(),OAuthAccessToken.class);
-                Security.getInstance().setAccessToken(authAccessToken.accessToken);
+                OAuthAccessTokenResponse authAccessToken = gson.fromJson(response.toString(), OAuthAccessTokenResponse.class);
+                Security.getInstance().setAccessToken(authAccessToken.getAccessToken());
             }
 
             @Override
@@ -223,11 +223,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgressDialog("loading");
-            LoginService.loginService("demouser15077694970000", "Abc@123456", new WebResponseListener() {
+            LoginService.loginService("demouser15077691240000", "Abc@123456", new WebResponseListener() {
                 @Override
                 public void onReceiveResponse(Object response) {
                     Gson gson =  new Gson();
-                    OAuthAccessToken authAccessToken = gson.fromJson(response.toString(),OAuthAccessToken.class);
+                    OAuthAccessTokenResponse authAccessToken = gson.fromJson(response.toString(), OAuthAccessTokenResponse.class);
+                    Security.getInstance().setUserAccessToken(authAccessToken.getAccessToken());
                     successfulLogin();
                 }
 

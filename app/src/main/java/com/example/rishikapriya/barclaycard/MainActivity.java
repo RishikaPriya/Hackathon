@@ -13,9 +13,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.VolleyError;
+import com.example.rishikapriya.barclaycard.Security.Security;
+import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
+import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
+import com.example.rishikapriya.barclaycard.constants.Constants;
 import com.example.rishikapriya.barclaycard.deals.MyOffersFragment;
-import com.example.rishikapriya.barclaycard.summary.Account;
+import com.example.rishikapriya.barclaycard.model.Account;
+import com.example.rishikapriya.barclaycard.model.CreateWalletResponse;
+import com.example.rishikapriya.barclaycard.service.AddAmountService;
+import com.example.rishikapriya.barclaycard.service.CreateWalletService;
 import com.example.rishikapriya.barclaycard.summary.AccountSummaryFragment;
+import com.google.gson.Gson;
+
+import java.util.Date;
+
+import static com.example.rishikapriya.barclaycard.constants.Constants.API_SUCCESS_CODE;
+import static com.example.rishikapriya.barclaycard.constants.Constants.MINIMUM_AMOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -44,6 +58,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         showMyOffersFragment();
+        createWallet();
+    }
+
+    private void createWallet() {
+        CreateWalletService.createWallet(new WebResponseListener() {
+            @Override
+            public void onReceiveResponse(Object response) {
+                Gson gson =  new Gson();
+                CreateWalletResponse walletResponse = gson.fromJson(response.toString(), CreateWalletResponse.class);
+                if(API_SUCCESS_CODE.equals(walletResponse.getStatus()) && CommonUtils.checkNullOrEmpty(walletResponse.getWalletCode().getWalletCode())){
+                    Security.getInstance().setWalletCode(walletResponse.getWalletCode().getWalletCode());
+                    AddAmountService.addAmount("TOP UP", "PublicTransport", new WebResponseListener() {
+                                @Override
+                                public void onReceiveResponse(Object response) {
+                                    showAccountSummaryFragment();
+                                }
+
+                                @Override
+                                public void onReceiveError(VolleyError volleyError) {
+
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onReceiveError(VolleyError volleyError) {
+
+            }
+        });
+        //ServerCommunication.getmInstance().addJSONPostRequest(Constants.CREATE_WALLET, BarclayCardServiceTask.getDefaultHeaders());
     }
 
     private void showMyOffersFragment() {
@@ -51,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showAccountSummaryFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, AccountSummaryFragment.newInstance(new Account()),AccountSummaryFragment.class.toString());
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, AccountSummaryFragment.newInstance(new Account()),AccountSummaryFragment.class.toString()).commit();
     }
 
     private void pushFragment() {
@@ -96,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_summary) {
-            // Handle the camera action
+            showAccountSummaryFragment();
         } else if (id == R.id.nav_deals) {
             showMyOffersFragment();
         } else if (id == R.id.nav_notification) {
