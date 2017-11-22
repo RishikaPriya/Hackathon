@@ -8,15 +8,15 @@ import com.example.rishikapriya.barclaycard.constants.Constants;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.rishikapriya.barclaycard.constants.Constants.QUICKSTART_DEVICE_ID;
+import static com.example.rishikapriya.barclaycard.constants.Constants.*;
 
 /**
- * Created by rishikapriya on 20/11/17.
+ * Created by rishikapriya on 22/11/17.
  */
 
-public class CreateWalletService {
+public class TransferMoneyService {
 
-    public static void createWallet (WebResponseListener listener){
+    public static void initiatePayment(String amount,String description, WebResponseListener listener){
         Map<String,String> headers =  new HashMap<>();
         headers.put("Accept","application/json");
         headers.put("Content-Type","application/json");
@@ -24,8 +24,10 @@ public class CreateWalletService {
         headers.put("DeviceId",QUICKSTART_DEVICE_ID);
 
         Map<String,String> request = new HashMap<>();
-        request.put("WalletName","new");
+        request.put("WalletCode",WALLET_CODE);
+        request.put("Amount",amount);
+        request.put("Description",description);
 
-        ServerCommunication.getmInstance().addJSONPostRequestWithParameters(Constants.CREATE_WALLET,headers,request,listener);
+        ServerCommunication.getmInstance().addJSONPostRequestWithParameters(INITIATE_PAYMENT,headers,request,listener);
     }
 }

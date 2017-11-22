@@ -36,4 +36,17 @@
     <string name="bought_at">Bought At : </string>
     <string name="current_price">Current Price : </string>
     <string name="item_name">Item Name</string>
+    <string name="buy">Buy Now</string>
+    <string name="select_address">Select Address</string>
+    <string name="proceed_to_pay">Proceed To Payment</string>
+    <string name="name">John Doe</string>
+    <string name="address_line1">EON IT Park</string>
+    <string name="address_line2">Pune, Maharashtra</string>
+    <string name="pincode">Pincode : 411014</string>
+    <string name="country">India</string>
+    <string name="deliver_to_address">Deliver to this address</string>
+    <string name="payment_successful">Payment Successful</string>
+    <string name="order_placed">Your order was placed successfully.</string>
+    <string name="address">John Doe \n EON IT Park \n Pune, Maharashtra 411014 \n India</string>
+    <string name="done">Done</string>
 </resources>

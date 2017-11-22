@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="@dimen/dimen_5d">
+    android:padding="@dimen/dimen_5dp">
 
     <LinearLayout
         android:id="@+id/thumbnail"
@@ -12,11 +12,12 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/dimen_3dp"
         android:layout_alignParentStart="true"
-        android:layout_marginEnd="@dimen/dimen_5d">
+        android:layout_marginEnd="@dimen/dimen_5dp">
             <ImageView
+                android:id="@+id/item_image"
                 android:layout_width="@dimen/dimen_60dp"
                 android:layout_height="@dimen/dimen_60dp"
-                android:src="@mipmap/ic_coin"/>
+                android:src="@drawable/ic_surf"/>
     </LinearLayout>
 
     <TextView
@@ -32,23 +33,10 @@
         android:typeface="sans"/>
 
     <TextView
-        android:id="@+id/last_bought_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/item_name"
-        android:layout_toEndOf="@+id/thumbnail"
-        android:layout_marginTop="@dimen/dimen_1dp"
-        android:text="@string/bought_at"
-        android:textSize="@dimen/dimen_15sp"
-        android:textStyle="bold"
-        android:textColor="@color/grey_blue"
-        android:typeface="sans"/>
-
-    <TextView
         android:id="@+id/current_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/last_bought_price"
+        android:layout_below="@+id/item_name"
         android:layout_toEndOf="@+id/thumbnail"
         android:layout_marginTop="@dimen/dimen_1dp"
         android:text="@string/current_price"
@@ -57,5 +45,26 @@
         android:textColor="@color/grey_blue"
         android:typeface="sans"/>
 
+    <TextView
+        android:id="@+id/last_bought_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/current_price"
+        android:layout_toEndOf="@+id/thumbnail"
+        android:layout_marginTop="@dimen/dimen_1dp"
+        android:text="@string/bought_at"
+        android:textSize="@dimen/dimen_15sp"
+        android:textStyle="bold"
+        android:textColor="@color/grey_blue"
+        android:typeface="sans"/>
 
+    <Button
+        android:id="@+id/buy_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="@string/buy"
+        android:layout_margin="@dimen/dimen_5dp"
+        android:background="@color/grey_blue"
+        android:textColor="@color/white"/>
 </RelativeLayout>

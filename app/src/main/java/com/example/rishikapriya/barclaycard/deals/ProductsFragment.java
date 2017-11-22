@@ -1,24 +1,22 @@
 package com.example.rishikapriya.barclaycard.deals;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.example.rishikapriya.barclaycard.R;
-import com.example.rishikapriya.barclaycard.Security.Security;
 import com.example.rishikapriya.barclaycard.communication.AmazonProductGateway;
 import com.example.rishikapriya.barclaycard.communication.ServerCommunication;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
@@ -69,20 +67,10 @@ public class ProductsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.product_summary,null,false);
         listView = view.findViewById(R.id.list_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        /*listView.setLayoutManager(layoutManager);
-        adapter = new ProductAdapter(new ArrayList<Item>(), new ProductAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Item item) {
-
-            }
-        });
+        List<Item> list = new ArrayList<>();
+        adapter = new ProductAdapter(list,getActivity());
         listView.setAdapter(adapter);
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL);
-        listView.addItemDecoration(itemDecoration);
         createMapOfItems();
-        //createListOfItems(view);
-        itemPriceMap = new HashMap<>();*/
         return view;
     }
 
@@ -90,59 +78,21 @@ public class ProductsFragment extends Fragment {
     private void createMapOfItems() {
         itemAsinMap = new HashMap<>();
 
-        itemAsinMap.put(ASIN_SURF,new Item("Surf Excel","500.00","1",ASIN_SURF));
-        itemAsinMap.put(ASIN_LAKME,new Item("Lakme","299.00","1", ASIN_LAKME));
-        itemAsinMap.put(ASIN_RICE,new Item("Rice","500.00","1",ASIN_RICE));
-        itemAsinMap.put(ASIN_DEO,new Item("Deo","500.00","1",ASIN_DEO));
-        itemAsinMap.put(ASIN_OIL,new Item("Oil","500.00","1",ASIN_OIL));
-        itemAsinMap.put(ASIN_FACEWASH,new Item("Face Wash","500.00","1",ASIN_FACEWASH));
+        itemAsinMap.put(ASIN_SURF, new Item("Surf Excel", "500.00", "1", ASIN_SURF, R.drawable.ic_surf));
+        itemAsinMap.put(ASIN_LAKME, new Item("Lakme", "299.00", "1", ASIN_LAKME, R.drawable.ic_lakme));
+        itemAsinMap.put(ASIN_RICE, new Item("Rice", "810.00", "1", ASIN_RICE, R.drawable.ic_rice));
+        itemAsinMap.put(ASIN_DEO, new Item("Deo", "250.00", "1", ASIN_DEO, R.drawable.ic_deo));
+        itemAsinMap.put(ASIN_OIL, new Item("Oil", "950.00", "1", ASIN_OIL, R.drawable.ic_olive_oil));
+        itemAsinMap.put(ASIN_FACEWASH, new Item("Face Wash", "220.00", "1", ASIN_FACEWASH, R.drawable.ic_facewash));
 
-        List<Item> list = new ArrayList<>();
-        //getAmazonPrice(0,ASIN_SURF);
-        /*list.add(new Item("Surf Excel","500.00",getAmazonPrice(ASIN_SURF),ASIN_SURF) );
-        list.add(new Item("Lakme","299.00", getAmazonPrice(ASIN_LAKME),ASIN_LAKME));
-        list.add(new Item("Rice","500.00", getAmazonPrice(ASIN_RICE),ASIN_RICE));
-        list.add(new Item("Deo","500.00", getAmazonPrice(ASIN_DEO),ASIN_DEO));
-        list.add(new Item("Oil","700.00", getAmazonPrice(ASIN_OIL),ASIN_OIL));
-        list.add(new Item("Face Wash","500.00", getAmazonPrice(ASIN_FACEWASH),ASIN_FACEWASH));
-*/
-        //setItemValues(list,view);
+        getAmazonPrice(ASIN_SURF);
+        getAmazonPrice(ASIN_LAKME);
+        getAmazonPrice(ASIN_RICE);
+        getAmazonPrice(ASIN_DEO);
+        getAmazonPrice(ASIN_OIL);
+        getAmazonPrice(ASIN_FACEWASH);
     }
 
-    private void setItemValues(List<Item> list, View view) {
-        boughtAt = view.findViewById(R.id.surfExcel_bought);
-        boughtAt.setText(list.get(0).getBoughtPrice());
-        newPrice = view.findViewById(R.id.surfExcel_current);
-        newPrice.setText(list.get(0).getNewPrice());
-
-        boughtAt = view.findViewById(R.id.lakme_bought);
-        boughtAt.setText(list.get(1).getBoughtPrice());
-        newPrice = view.findViewById(R.id.lakme_current);
-        newPrice.setText(list.get(1).getNewPrice());
-
-        boughtAt = view.findViewById(R.id.rice_bought);
-        boughtAt.setText(list.get(2).getBoughtPrice());
-        newPrice = view.findViewById(R.id.rice_current);
-        newPrice.setText(list.get(2).getNewPrice());
-
-        boughtAt = view.findViewById(R.id.deo_bought);
-        boughtAt.setText(list.get(3).getBoughtPrice());
-        newPrice = view.findViewById(R.id.deo_current);
-        newPrice.setText(list.get(3).getNewPrice());
-
-        boughtAt = view.findViewById(R.id.oil_bought);
-        boughtAt.setText(list.get(4).getBoughtPrice());
-        newPrice = view.findViewById(R.id.oil_current);
-        newPrice.setText(list.get(4).getNewPrice());
-
-        boughtAt = view.findViewById(R.id.face_wash_bought);
-        boughtAt.setText(list.get(5).getBoughtPrice());
-        newPrice = view.findViewById(R.id.face_wash_current);
-        newPrice.setText(list.get(5).getNewPrice());
-
-
-
-    }
 
     private void getAmazonPrice(String id) {
         ServerCommunication.getmInstance().stringGETRequest(AmazonProductGateway.getInstance().productLookUp(id), new WebResponseListener<String>() {
@@ -158,6 +108,10 @@ public class ProductsFragment extends Fragment {
             }
         });
 
+    }
+
+    private void showSelectAddressFragment(Item product) {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,SelectAddressFragment.getInstance(product)).commit();
     }
 
     private void parseResponse(String response) {
@@ -184,33 +138,83 @@ public class ProductsFragment extends Fragment {
         String id = rootElement.getElementsByTagName("ItemId").item(0).getTextContent();
 
         String price = rootElement.getElementsByTagName("LowestNewPrice").item(0).getChildNodes().item(0).getTextContent();
-       // itemPriceMap.get(id).setter;
-       // adapter.addProductToList(itemPriceMap);
+
+        itemAsinMap.get(id).setNewPrice(new StringBuffer(price).insert(price.length()-2, ".").toString());
+        adapter.addProductToList(itemAsinMap.get(id));
+        adapter.notifyDataSetChanged();
 
     }
 
-    public static class ProductAdapter extends BaseAdapter{
+    public class ProductAdapter extends BaseAdapter{
 
-        private 
+        private final LayoutInflater inflater;
+        private List<Item> productList;
+        private Context context;
+
+        private ProductAdapter(List<Item> list, Context context){
+
+            this.productList = list;
+            this.inflater = LayoutInflater.from(context);
+            this.context = context;
+        }
 
         @Override
         public int getCount() {
-            return 0;
+            return productList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return productList.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final ViewHolder holder;
+            if(convertView == null){
+                convertView =  inflater.inflate(R.layout.product_item,null);
+                holder = new ViewHolder();
+                holder.itemName = convertView.findViewById(R.id.item_name);
+                holder.boughtPrice = convertView.findViewById(R.id.last_bought_price);
+                holder.currentPrice = convertView.findViewById(R.id.current_price);
+                holder.itemImage = convertView.findViewById(R.id.item_image);
+                holder.buyNow = convertView.findViewById(R.id.buy_button);
+
+                convertView.setTag(holder);
+            }else{
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.itemName.setText(productList.get(position).getName());
+            holder.boughtPrice.setText(getString(R.string.bought_at) + productList.get(position).getBoughtPrice());
+            holder.currentPrice.setText(getString(R.string.current_price) + productList.get(position).getNewPrice());
+            holder.itemImage.setImageResource(productList.get(position).getImageId());
+            holder.buyNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showSelectAddressFragment(productList.get(position));
+                }
+            });
+
+            return convertView;
+        }
+
+        public void addProductToList(Item item) {
+            productList.add(item);
+            notifyDataSetChanged();
+        }
+
+        class ViewHolder {
+            ImageView itemImage;
+            TextView itemName;
+            TextView boughtPrice;
+            TextView currentPrice;
+            Button buyNow;
         }
     }
 }

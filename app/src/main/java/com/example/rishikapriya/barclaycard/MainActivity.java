@@ -26,6 +26,7 @@ import com.example.rishikapriya.barclaycard.model.Account;
 import com.example.rishikapriya.barclaycard.model.CreateWalletResponse;
 import com.example.rishikapriya.barclaycard.service.AddAmountService;
 import com.example.rishikapriya.barclaycard.service.CreateWalletService;
+import com.example.rishikapriya.barclaycard.service.GetWalletInfoService;
 import com.example.rishikapriya.barclaycard.summary.AccountSummaryFragment;
 import com.google.gson.Gson;
 
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         showMyOffersFragment();
         createWallet();
-        //getAmazon();
     }
 
     private void createWallet() {
@@ -89,8 +89,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onReceiveResponse(Object response) {
                 Gson gson =  new Gson();
                 CreateWalletResponse walletResponse = gson.fromJson(response.toString(), CreateWalletResponse.class);
-                if(API_SUCCESS_CODE.equals(walletResponse.getStatus()) && CommonUtils.checkNullOrEmpty(walletResponse.getWalletCode().getWalletCode())){
-                    Security.getInstance().setWalletCode(walletResponse.getWalletCode().getWalletCode());
+                if(API_SUCCESS_CODE.equals(walletResponse.getStatus()) && !CommonUtils.checkNullOrEmpty(walletResponse.getWallet().getWalletCode())){
+                    //Security.getInstance().setWalletCode(walletResponse.getWallet().getWalletCode());
                     AddAmountService.addAmount("TOP UP", "PublicTransport", new WebResponseListener() {
                                 @Override
                                 public void onReceiveResponse(Object response) {
@@ -174,9 +174,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void showAccountSummaryFragment() {
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, AccountSummaryFragment.newInstance(new Account()),AccountSummaryFragment.class.toString()).commit();
-    }
-
-    private void pushFragment() {
     }
 
     @Override

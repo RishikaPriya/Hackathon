@@ -11,6 +11,6 @@ public class Account implements Serializable{
     private double balance;
     private String walletCode;
     private String name;
-    private String address;
+    private String email_address;
 
 }

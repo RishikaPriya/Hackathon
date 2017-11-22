@@ -8,19 +8,48 @@ import com.google.gson.annotations.SerializedName
 
 class CreateWalletResponse{
     @SerializedName("DataObject")
-    val walletCode: Wallet? = null
+    val wallet: Wallet? = null
     @SerializedName ("Status")
     val status: String? = null
     @SerializedName("Message")
     val message: String? = null
+}
 
-    class Wallet{
-        val walletCode: String? = null
-    }
+class Wallet{
+    @SerializedName("WalletCode")
+    val walletCode: String? = null
 }
 
 class OAuthAccessTokenResponse(@SerializedName("scope") val scope: String, @SerializedName("token_type") val token: String,
                                @SerializedName("expires_in") val expiresIn: String, @SerializedName("access_token") val accessToken: String,
                                @SerializedName("refresh_token") val refresh_token: String);
 
-class Item(val name: String, val boughtPrice: String , val newPrice: String, val asin : String);
+class InitiatePaymentResponse{
+    @SerializedName("DataObject")
+    val transactionId: Transaction? = null
+    @SerializedName ("Status")
+    val status: String? = null
+    @SerializedName("Message")
+    val message: String? = null
+}
+
+class Transaction{
+    @SerializedName("TransactionID")
+    val transactionId: String? = null
+}
+
+class WalletInfoResponse(
+        @SerializedName("DataObject")
+        val walletInfo: WalletInfo? = null,
+        @SerializedName ("Status")
+        val status: String? = null,
+        @SerializedName("Message")
+        val message: String? = null
+);
+
+class WalletInfo(
+    @SerializedName("WalletCode")
+    val walletCode: String? = null,
+    @SerializedName("CurrentBalance")
+    val currentBalance: String? = null
+);

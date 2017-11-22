@@ -138,7 +138,7 @@ public class ServerCommunication {
         return request_string.substring(0, request_string.length()-1);
     }
 
-    public void addJSONGetRequest(String url, final Map<String, String> requestParameters,
+    public void addJSONGetRequest(String url, final Map<String, String> requestParameters, final Map<String,String> headers,
                                    final WebResponseListener<JSONObject> webResponseListener){
 
         JsonObjectRequest jsonObjectRequest =
@@ -149,30 +149,12 @@ public class ServerCommunication {
                         new ErrorListener(webResponseListener)){
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String,String> headers =  new HashMap<>();
-                        headers.put("Authorization",authorizationHeader);
-                        headers.put("DeviceId",deviceId);
                         return headers;
                     }
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         return requestParameters;
-                    }
-
-                    @Override
-                    public byte[] getBody() {
-                        String httpPostBody="grant_type=client_credentials&scope=PRODUCTION";
-                        // usually you'd have a field with some values you'd want to escape, you need to do it yourself if overriding getBody. here's how you do it
-                        try {
-                            httpPostBody=httpPostBody+"&randomFieldFilledWithAwkwardCharacters="+
-                                    URLEncoder.encode("{{%stuffToBe Escaped/","UTF-8");
-                        } catch (UnsupportedEncodingException exception) {
-                            CommonUtils.error("ERROR", "exception" + exception);
-                            // return null and don't pass any POST string if you encounter encoding error
-                            return null;
-                        }
-                        return httpPostBody.getBytes();
                     }
                 };
 

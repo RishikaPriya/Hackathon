@@ -56,9 +56,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -223,7 +220,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgressDialog("loading");
-            LoginService.loginService("demouser15077691240000", "Abc@123456", new WebResponseListener() {
+            LoginService.loginService("hack171103", "Abc@1234", new WebResponseListener() {
                 @Override
                 public void onReceiveResponse(Object response) {
                     Gson gson =  new Gson();

@@ -3,29 +3,28 @@ package com.example.rishikapriya.barclaycard.service;
 import com.example.rishikapriya.barclaycard.Security.Security;
 import com.example.rishikapriya.barclaycard.communication.ServerCommunication;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
-import com.example.rishikapriya.barclaycard.constants.Constants;
+import com.example.rishikapriya.barclaycard.deals.SelectAddressFragment;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.rishikapriya.barclaycard.constants.Constants.QUICKSTART_DEVICE_ID;
+import static com.example.rishikapriya.barclaycard.constants.Constants.*;
 
 /**
- * Created by rishikapriya on 20/11/17.
+ * Created by rishikapriya on 22/11/17.
  */
 
-public class CreateWalletService {
+public class GetWalletInfoService {
 
-    public static void createWallet (WebResponseListener listener){
+    public static void getWalletInfo(WebResponseListener listener){
         Map<String,String> headers =  new HashMap<>();
         headers.put("Accept","application/json");
         headers.put("Content-Type","application/json");
         headers.put("Authorization","Bearer "+ Security.getInstance().getUserAccessToken());
         headers.put("DeviceId",QUICKSTART_DEVICE_ID);
 
-        Map<String,String> request = new HashMap<>();
-        request.put("WalletName","new");
 
-        ServerCommunication.getmInstance().addJSONPostRequestWithParameters(Constants.CREATE_WALLET,headers,request,listener);
+        ServerCommunication.getmInstance().addJSONGetRequest(GET_WALLET_INFO + WALLET_CODE, null, headers, listener);
+
     }
 }
