@@ -35,4 +35,5 @@
     <string name="wallet">Wallet</string>
     <string name="bought_at">Bought At : </string>
     <string name="current_price">Current Price : </string>
+    <string name="item_name">Item Name</string>
 </resources>

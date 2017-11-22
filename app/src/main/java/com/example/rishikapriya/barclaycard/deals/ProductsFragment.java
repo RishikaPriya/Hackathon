@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -46,7 +48,7 @@ public class ProductsFragment extends Fragment {
     private Activity activity;
     private TextView boughtAt;
     private TextView newPrice;
-    private RecyclerView listView;
+    private ListView listView;
     private ProductAdapter adapter;
     private Map<String,Item> itemPriceMap, itemAsinMap;
     private static final String ASIN_SURF = "B00TS88UZW";
@@ -66,9 +68,9 @@ public class ProductsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.product_summary,null,false);
-        listView = view.findViewById(R.id.listview);
+        listView = view.findViewById(R.id.list_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        listView.setLayoutManager(layoutManager);
+        /*listView.setLayoutManager(layoutManager);
         adapter = new ProductAdapter(new ArrayList<Item>(), new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Item item) {
@@ -80,7 +82,7 @@ public class ProductsFragment extends Fragment {
         listView.addItemDecoration(itemDecoration);
         createMapOfItems();
         //createListOfItems(view);
-        itemPriceMap = new HashMap<>();
+        itemPriceMap = new HashMap<>();*/
         return view;
     }
 
@@ -187,71 +189,28 @@ public class ProductsFragment extends Fragment {
 
     }
 
-    public static class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
+    public static class ProductAdapter extends BaseAdapter{
 
-        private List<Item> itemList;
-        AdapterView.OnItemClickListener itemClickListener;
+        private 
 
-        public interface OnItemClickListener {
-            void onItemClick(Item item);
-        }
-
-
-        public ProductAdapter(List<Item> list, OnItemClickListener onItemClickListener){
-            itemList = list;
-            this.itemClickListener = (AdapterView.OnItemClickListener) onItemClickListener;
-        }
-
-
-        public class ViewHolder extends RecyclerView.ViewHolder{
-
-            private TextView boughtAt;
-            private TextView currentPrice;
-
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                boughtAt = itemView.findViewById(R.id.tv_bought_at);
-                currentPrice = itemView.findViewById(R.id.tv_current_price);
-
-            }
-
-            public void bind(final Item item, final OnItemClickListener listener) {
-                boughtAt.setText(item.getBoughtPrice());
-                currentPrice.setText(item.getNewPrice());
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                        listener.onItemClick(item);
-                    }
-                });
-            }
-
+        @Override
+        public int getCount() {
+            return 0;
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.product_item,parent, false);
-            return new ViewHolder(v);
+        public Object getItem(int position) {
+            return null;
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            Item product = itemList.get(position);
-            holder.bind(itemList.get(position), (OnItemClickListener) itemClickListener);
+        public long getItemId(int position) {
+            return 0;
         }
 
         @Override
-        public int getItemCount() {
-            return itemList.size();
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return null;
         }
-
-        public void addProductToList(Item item){
-            itemList.add(item);
-            notifyDataSetChanged();
-        }
-
-
-
     }
 }
