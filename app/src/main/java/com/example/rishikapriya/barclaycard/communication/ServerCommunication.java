@@ -37,6 +37,38 @@ public class ServerCommunication {
         return mInstance;
     }
 
+    public void addJSONStringRequest(String url){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        ApplicationController.getInstance().getRequestQueue().add(stringRequest);
+
+    }
+
+    public void stringGETRequest(String url, final WebResponseListener<String> webResponseListener){
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                webResponseListener.onReceiveResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                webResponseListener.onReceiveError(error);
+            }
+        });
+        ApplicationController.getInstance().getRequestQueue().add(request);
+    }
+
     public void addJSONPostRequest(String url, final Map<String,String> headers, final Map<String,String> request,
                                    final WebResponseListener webResponseListener){
 

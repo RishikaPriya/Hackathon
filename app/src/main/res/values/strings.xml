@@ -33,4 +33,6 @@
     <string name="rewards">Rewards</string>
     <string name="manage_notification">Manage Notification</string>
     <string name="wallet">Wallet</string>
+    <string name="bought_at">Bought At : </string>
+    <string name="current_price">Current Price : </string>
 </resources>

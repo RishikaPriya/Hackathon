@@ -3,6 +3,7 @@ package com.example.rishikapriya.barclaycard;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import com.android.volley.VolleyError;
 import com.example.rishikapriya.barclaycard.Security.Security;
 import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
+import com.example.rishikapriya.barclaycard.communication.AmazonProductGateway;
+import com.example.rishikapriya.barclaycard.communication.ServerCommunication;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
 import com.example.rishikapriya.barclaycard.constants.Constants;
 import com.example.rishikapriya.barclaycard.deals.MyOffersFragment;
@@ -26,10 +29,27 @@ import com.example.rishikapriya.barclaycard.service.CreateWalletService;
 import com.example.rishikapriya.barclaycard.summary.AccountSummaryFragment;
 import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.Date;
 
 import static com.example.rishikapriya.barclaycard.constants.Constants.API_SUCCESS_CODE;
 import static com.example.rishikapriya.barclaycard.constants.Constants.MINIMUM_AMOUNT;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -57,8 +77,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         showMyOffersFragment();
         createWallet();
+        //getAmazon();
     }
 
     private void createWallet() {
@@ -88,11 +110,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
-        //ServerCommunication.getmInstance().addJSONPostRequest(Constants.CREATE_WALLET, BarclayCardServiceTask.getDefaultHeaders());
     }
 
+    private void getAmazon() {
+        ServerCommunication.getmInstance().stringGETRequest(AmazonProductGateway.getInstance().productLookUp("B01BBNF6GM"), new WebResponseListener<String>() {
+            @Override
+            public void onReceiveResponse(String response) {
+                Log.v("RESPONSE",response);
+                parseResponse(response);
+
+                XmlToJson xml = new XmlToJson.Builder(response).build();
+
+                JSONObject jsonObj = xml.toJson();
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = XML.toJSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.v("JSON: ", jsonObject.toString());
+            }
+
+            @Override
+            public void onReceiveError(VolleyError volleyError) {
+
+            }
+        });
+    }
+
+    private void parseResponse(String response) {
+
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        Document document = null;
+        try {
+            document = builder.parse(new InputSource(new StringReader(response)));
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Element rootElement = document.getDocumentElement();
+        String price  = getElementValue("LowestNewPrice", rootElement);
+
+
+    }
+
+    private String getElementValue(String tagName, Element element) {
+        return element.getChildNodes().item(1).getChildNodes().item(1).getChildNodes().item(1).getChildNodes().item(0).getChildNodes().item(0).getTextContent();
+    }
+
+
+
     private void showMyOffersFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, MyOffersFragment.newInstance(),MyOffersFragment.class.toString()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, MyOffersFragment.newInstance(this),MyOffersFragment.class.toString()).commit();
     }
 
     private void showAccountSummaryFragment() {

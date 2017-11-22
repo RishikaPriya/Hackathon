@@ -1,5 +1,7 @@
 package com.example.rishikapriya.barclaycard.Security;
 
+import com.example.rishikapriya.barclaycard.model.Item;
+
 /**
  * Created by rishikapriya on 15/11/17.
  */
@@ -11,6 +13,7 @@ public class Security {
     public String userAccessToken;
     public String accessToken;
     public String walletCode;
+    private Item item;
 
     public static Security getInstance(){
         if(instance == null){
@@ -57,5 +60,13 @@ public class Security {
 
     public void setWalletCode(String walletCode) {
         this.walletCode = walletCode;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }

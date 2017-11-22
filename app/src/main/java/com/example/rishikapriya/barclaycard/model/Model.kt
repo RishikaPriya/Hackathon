@@ -22,3 +22,5 @@ class CreateWalletResponse{
 class OAuthAccessTokenResponse(@SerializedName("scope") val scope: String, @SerializedName("token_type") val token: String,
                                @SerializedName("expires_in") val expiresIn: String, @SerializedName("access_token") val accessToken: String,
                                @SerializedName("refresh_token") val refresh_token: String);
+
+class Item(val name: String, val boughtPrice: String , val newPrice: String, val asin : String);

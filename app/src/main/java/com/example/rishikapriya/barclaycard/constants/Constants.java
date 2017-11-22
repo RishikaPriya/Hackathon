@@ -25,5 +25,6 @@ public final class Constants {
     public static final String MINIMUM_AMOUNT = "100000";
     public static final String ADD_AMOUNT = API_BASE_URL + "wallet/AddValue";
 
+
     private Constants() {}
 }
