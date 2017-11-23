@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fund_transfer"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/grey_blue"
+            android:textSize="@dimen/dimen_20sp"/>
+    </LinearLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/account_number_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:layout_below="@+id/header"
+        android:padding="@dimen/dimen_10dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/account_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_blue"
+            android:hint="@string/to_account_number"
+            android:imeOptions="actionNext"
+            android:maxLength="19"
+            android:inputType="number" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/amount_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:layout_below="@+id/account_number_layout"
+        android:padding="@dimen/dimen_10dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_blue"
+            android:hint="@string/amount"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/transfer_amount"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50dp"
+        android:text="@string/next"
+        android:textSize="@dimen/dimen_20sp"
+        android:textColor="@color/white"
+        android:background="@color/grey_blue"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

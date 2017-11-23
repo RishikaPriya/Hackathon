@@ -1,7 +1,6 @@
 package com.example.rishikapriya.barclaycard.deals;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,17 +29,24 @@ public class MyOffersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.offers_layout,null,false);
         RelativeLayout offersLayout = view.findViewById(R.id.rl_offers);
-        setonClickListenerForOffers(offersLayout);
+        RelativeLayout fundTransferLayout = view.findViewById(R.id.rl_fund_transfer);
+        offersLayout.setOnClickListener(offerListener);
+        fundTransferLayout.setOnClickListener(fundListener);
         return view;
     }
 
-    private void setonClickListenerForOffers(RelativeLayout offersLayout) {
-        offersLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,ProductsFragment.getInstance(context, null),ProductsFragment.class.toString()).commit();
-                //getActivity().getFragmentManager().beginTransaction().add(ProductsFragment.getInstance(context), "fads").commitAllowingStateLoss();
-            }
-        });
-    }
+    private View.OnClickListener offerListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,ProductsFragment.getInstance(context, null),ProductsFragment.class.toString()).commit();
+        }
+    };
+
+    private View.OnClickListener fundListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,FundTransferFragment.getInstance(),FundTransferFragment.class.toString()).commit();
+        }
+    };
+
 }

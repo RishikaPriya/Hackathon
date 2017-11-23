@@ -2,44 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/dimen_10dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/headerLayout"
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dimen_10dp">
         <TextView
-            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/payment_successful"
+            android:text="@string/select_wallet"
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="@color/grey_blue"
             android:textSize="@dimen/dimen_20sp"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/message"
+    <ListView
+        android:id="@+id/list_view"
+        android:padding="@dimen/dimen_10dp"
+        android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/order_placed"
-        android:layout_below="@+id/headerLayout"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/grey_blue"
-        android:textSize="@dimen/dimen_20sp"/>
+        android:dividerHeight="@dimen/dimen_2dp"/>
 
     <Button
-        android:id="@+id/done"
+        android:id="@+id/transfer_amount"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50dp"
-        android:text="@string/done"
+        android:text="@string/transfer_amount"
         android:textSize="@dimen/dimen_20sp"
         android:textColor="@color/white"
         android:background="@color/grey_blue"
         android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>

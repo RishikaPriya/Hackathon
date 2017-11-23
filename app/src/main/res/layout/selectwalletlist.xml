@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_10dp"
+        android:background="@drawable/background"
+        android:layout_below="@+id/header">
+
+        <RadioButton
+            android:id="@+id/select_wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_10dp"
+            android:layout_below="@+id/header">
+            <TextView
+                android:id="@+id/wallet_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_blue"
+                android:textSize="@dimen/dimen_16sp"
+                android:paddingLeft="@dimen/dimen_10dp"
+                android:text="@string/wallet_name"/>
+
+            <TextView
+                android:id="@+id/current_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_blue"
+                android:textSize="@dimen/dimen_16sp"
+                android:paddingLeft="@dimen/dimen_10dp"
+                android:text="@string/current_balance"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

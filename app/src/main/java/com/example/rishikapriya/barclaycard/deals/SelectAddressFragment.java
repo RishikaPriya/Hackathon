@@ -15,9 +15,10 @@ import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
 import com.example.rishikapriya.barclaycard.model.Item;
 import com.example.rishikapriya.barclaycard.model.StatusResponse;
 import com.example.rishikapriya.barclaycard.service.TransferMoneyService;
+import com.example.rishikapriya.barclaycard.wallets.SelectWalletFragment;
 import com.google.gson.Gson;
 
-import static com.example.rishikapriya.barclaycard.constants.Constants.API_SUCCESS_CODE;
+import static com.example.rishikapriya.barclaycard.constants.Constants.*;
 
 /**
  * Created by rishikapriya on 22/11/17.
@@ -37,34 +38,20 @@ public class SelectAddressFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.select_address_fragment, null, false);
-        Button deliverButton = view.findViewById(R.id.proceed_payment);
+        Button proceedPaymentButton = view.findViewById(R.id.proceed_payment);
 
-        deliverButton.setOnClickListener(new View.OnClickListener() {
+        proceedPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                TransferMoneyService.transferAmount(item.getNewPrice(),item.getName(),new WebResponseListener() {
-                    @Override
-                    public void onReceiveResponse(Object response) {
-                        Gson gson = new Gson();
-                        StatusResponse statusResponse = gson.fromJson(response.toString(), StatusResponse.class);
-                        if(API_SUCCESS_CODE.equals(statusResponse.getStatus())){
-                            showPaymentSuccessful();
-                        }
-
-                    }
-
-                    @Override
-                    public void onReceiveError(VolleyError volleyError) {
-
-                    }
-                });
+                showSelectWalletFragment();
             }
         });
         return view;
     }
 
-    private void showPaymentSuccessful() {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,OrderPlacedSuccessfully.getInstance()).commit();
+    private void showSelectWalletFragment() {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
+                SelectWalletFragment.getInstance(VENDOR_WALLET_CODE, item.getNewPrice(), PURCHASE_REASON, SelectAddressFragment.class.toString()),
+                SelectWalletFragment.class.toString()).commit();
     }
 }

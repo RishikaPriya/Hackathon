@@ -46,11 +46,11 @@ public class TransferMoneyService {
         ServerCommunication.getmInstance().addJSONPostRequestWithParameters(CONFIRM_PAYMENT,getHeaderMap(),request,listener);
     }
 
-    public static void transferAmount(String amount, String reason, WebResponseListener listener){
+    public static void transferAmount(String fromWallet, String toWallet, String amount, String reason, WebResponseListener listener){
 
         Map<String,String> request = new HashMap<>();
-        request.put("FromWalletCode",WALLET_CODE);
-        request.put("ToWalletCode",VENDOR_WALLET_CODE);
+        request.put("FromWalletCode",fromWallet);
+        request.put("ToWalletCode",toWallet);
         request.put("Date","01/01/2016");
         request.put("Amount",amount);
         request.put("Reason", reason);
