@@ -24,7 +24,7 @@ public class CreateWalletService {
         headers.put("DeviceId",QUICKSTART_DEVICE_ID);
 
         Map<String,String> request = new HashMap<>();
-        request.put("WalletName","new");
+        request.put("WalletName","BankAccount2048");
 
         ServerCommunication.getmInstance().addJSONPostRequestWithParameters(Constants.CREATE_WALLET,headers,request,listener);
     }

@@ -14,6 +14,8 @@ public class Security {
     public String accessToken;
     public String walletCode;
     private Item item;
+    private double balance;
+
 
     public static Security getInstance(){
         if(instance == null){
@@ -60,6 +62,14 @@ public class Security {
 
     public void setWalletCode(String walletCode) {
         this.walletCode = walletCode;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public Item getItem() {

@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.volley.VolleyError;
+import com.example.rishikapriya.barclaycard.Security.Security;
 import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
 import com.example.rishikapriya.barclaycard.communication.AmazonProductGateway;
 import com.example.rishikapriya.barclaycard.communication.ServerCommunication;
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         createWallet();
-
         if(getIntent().getExtras() != null){
             Item item = new Item(
                     getIntent().getStringExtra("name"),
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
     private void showProductSummaryFragment(Item item) {
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, ProductsFragment.getInstance(this, item),ProductsFragment.class.toString()).commit();
     }
@@ -94,12 +95,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onReceiveResponse(Object response) {
                 Gson gson =  new Gson();
                 CreateWalletResponse walletResponse = gson.fromJson(response.toString(), CreateWalletResponse.class);
-                if(API_SUCCESS_CODE.equals(walletResponse.getStatus()) && !CommonUtils.checkNullOrEmpty(walletResponse.getWallet().getWalletCode())){
-                    //Security.getInstance().setWalletCode(walletResponse.getWallet().getWalletCode());
+                if(API_SUCCESS_CODE.equals(walletResponse.getStatus()) && CommonUtils.checkNullOrEmpty(walletResponse.getWallet().getWalletCode())){
+                    Security.getInstance().setWalletCode(walletResponse.getWallet().getWalletCode());
                     AddAmountService.addAmount("TOP UP", "PublicTransport", new WebResponseListener() {
                                 @Override
                                 public void onReceiveResponse(Object response) {
-                                    showWalledListInfoFragment();
+
                                 }
 
                                 @Override

@@ -24,7 +24,7 @@ public class GetWalletInfoService {
         headers.put("DeviceId",QUICKSTART_DEVICE_ID);
 
 
-        ServerCommunication.getmInstance().addJSONGetRequest(GET_WALLET_INFO + WALLET_CODE, null, headers, listener);
+        ServerCommunication.getmInstance().addJSONGetRequest(GET_WALLET_INFO + Security.getInstance().getWalletCode(), null, headers, listener);
 
     }
 }

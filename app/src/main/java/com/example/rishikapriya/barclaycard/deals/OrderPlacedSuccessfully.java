@@ -15,6 +15,7 @@ import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
 import com.example.rishikapriya.barclaycard.model.Account;
 import com.example.rishikapriya.barclaycard.service.GetWalletInfoService;
 import com.example.rishikapriya.barclaycard.summary.AccountSummaryFragment;
+import com.example.rishikapriya.barclaycard.wallets.WalletFragment;
 
 /**
  * Created by rishikapriya on 22/11/17.
@@ -58,6 +59,7 @@ public class OrderPlacedSuccessfully extends Fragment {
     }
 
     private void showHomeScreen() {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, AccountSummaryFragment.newInstance(new Account()), AccountSummaryFragment.class.toString()).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, WalletFragment.newInstance(getActivity()),WalletFragment.class.toString()).commit();
+
     }
 }

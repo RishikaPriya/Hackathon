@@ -26,7 +26,7 @@ public class AddAmountService {
 
         Map<String,String> request = new HashMap<>();
         request.put("WalletCode",Security.getInstance().getWalletCode());
-        request.put("Date", new Date().toString());
+        request.put("Date", "01/01/2016");
         request.put("Amount", MINIMUM_AMOUNT);
         request.put("Reason", description);
         request.put("SubCategoryCode",subCategory);

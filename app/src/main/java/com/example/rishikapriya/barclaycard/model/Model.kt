@@ -66,3 +66,11 @@ class WalletListResponse(
         @SerializedName("Message")
         val message: String? = null
 );
+
+
+class StatusResponse(
+        @SerializedName ("Status")
+        val status: String? = null,
+        @SerializedName("Message")
+        val message: String? = null
+);

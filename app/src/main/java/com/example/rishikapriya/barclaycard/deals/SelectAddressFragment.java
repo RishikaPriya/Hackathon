@@ -1,5 +1,6 @@
 package com.example.rishikapriya.barclaycard.deals;
 
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,10 +12,8 @@ import android.widget.Button;
 import com.android.volley.VolleyError;
 import com.example.rishikapriya.barclaycard.R;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
-import com.example.rishikapriya.barclaycard.constants.Constants;
-import com.example.rishikapriya.barclaycard.model.CreateWalletResponse;
-import com.example.rishikapriya.barclaycard.model.InitiatePaymentResponse;
 import com.example.rishikapriya.barclaycard.model.Item;
+import com.example.rishikapriya.barclaycard.model.StatusResponse;
 import com.example.rishikapriya.barclaycard.service.TransferMoneyService;
 import com.google.gson.Gson;
 
@@ -43,15 +42,16 @@ public class SelectAddressFragment extends Fragment {
         deliverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TransferMoneyService.initiatePayment(item.getNewPrice(),item.getName(),new WebResponseListener() {
+
+                TransferMoneyService.transferAmount(item.getNewPrice(),item.getName(),new WebResponseListener() {
                     @Override
                     public void onReceiveResponse(Object response) {
-                        Gson gson =  new Gson();
-                        InitiatePaymentResponse initiatePaymentResponse = gson.fromJson(response.toString(), InitiatePaymentResponse.class);
-
-                        if(API_SUCCESS_CODE.equals(initiatePaymentResponse.getStatus())){
+                        Gson gson = new Gson();
+                        StatusResponse statusResponse = gson.fromJson(response.toString(), StatusResponse.class);
+                        if(API_SUCCESS_CODE.equals(statusResponse.getStatus())){
                             showPaymentSuccessful();
                         }
+
                     }
 
                     @Override

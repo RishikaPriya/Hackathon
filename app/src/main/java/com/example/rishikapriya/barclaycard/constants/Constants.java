@@ -13,9 +13,13 @@ public final class Constants {
 
     public static final String CREATE_WALLET = API_BASE_URL + "wallet/CreateWallet";
     public static final String INITIATE_PAYMENT = API_BASE_URL + "wallet/InitiatePayment";
+    public static final String CONFIRM_PAYMENT = API_BASE_URL + "wallet/ConfirmPayment";
+    public static final String TRANSFER_AMOUNT = API_BASE_URL + "wallet/TransferValue";
     public static final String GET_WALLET_INFO = API_BASE_URL + "wallet/GetWalletInfo?walletCode=";
     public static final String GET_WALLET_LIST_INFO = API_BASE_URL + "wallet/GetWalletList?pageSize=10&pageNum=1";
     public static final String API_SUCCESS_CODE = "000000";
+    public static final String PIN = "123456";
+    public static final String VENDOR_WALLET_CODE = "5271772269521760491";
 
     public static final String CONSUMER_KEY = "BNJcXtG7De1EFRssRGN2y52gbD8a";
     public static final String CONSUMER_SECRET = "EzZ3fBbMeYy40CnxwSCJBJIVnLoa";
@@ -24,7 +28,7 @@ public final class Constants {
 
     // Can be static for a given device
     public static final String QUICKSTART_DEVICE_ID = "228030";
-    public static final String WALLET_CODE = "5058493748933462035";
+    public static final String WALLET_CODE = "5419679318371569495";
     public static final String MINIMUM_AMOUNT = "100000";
     public static final String ADD_AMOUNT = API_BASE_URL + "wallet/AddValue";
 
