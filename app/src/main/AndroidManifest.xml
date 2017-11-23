@@ -8,9 +8,9 @@
     <application
         android:name=".ApplicationController"
         android:allowBackup="true"
-        android:icon="@mipmap/barclays"
+        android:icon="@mipmap/ic_bank"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/barclays"
+        android:roundIcon="@mipmap/ic_bank_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity

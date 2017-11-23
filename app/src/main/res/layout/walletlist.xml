@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen_5dp">
+
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_3dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/dimen_5dp">
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="@dimen/dimen_60dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:src="@drawable/ic_credit_card"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_5dp"
+        android:orientation="vertical"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail"
+        android:layout_marginTop="@dimen/dimen_10dp">
+            <TextView
+            android:id="@+id/card_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wallet_name"
+            android:textSize="@dimen/dimen_15sp"
+            android:textStyle="bold"
+            android:textColor="@color/grey_blue"
+            android:typeface="sans"/>
+
+            <TextView
+                android:id="@+id/card_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet_name"
+                android:textSize="@dimen/dimen_16sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey_blue"
+                android:typeface="sans"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_5dp"
+        android:orientation="vertical"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:layout_marginEnd="@dimen/dimen_10dp">
+
+            <TextView
+                android:id="@+id/current_balance_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_balance"
+                android:textSize="@dimen/dimen_15sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey_blue"
+                android:typeface="sans"/>
+            <TextView
+                android:id="@+id/current_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_balance"
+                android:textSize="@dimen/dimen_16sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey_blue"
+                android:typeface="sans"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

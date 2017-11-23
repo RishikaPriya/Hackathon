@@ -51,5 +51,18 @@ class WalletInfo(
     @SerializedName("WalletCode")
     val walletCode: String? = null,
     @SerializedName("CurrentBalance")
-    val currentBalance: String? = null
+    val currentBalance: String? = null,
+    @SerializedName("Name")
+    val walletName: String? =null
+);
+
+class WalletListResponse(
+        @SerializedName("TotalRecords")
+        val size: Int? = null,
+        @SerializedName("ListOfObjects")
+        val walletListInfo: List<WalletInfo>? = null,
+        @SerializedName ("Status")
+        val status: String? = null,
+        @SerializedName("Message")
+        val message: String? = null
 );

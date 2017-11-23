@@ -15,19 +15,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.volley.VolleyError;
-import com.example.rishikapriya.barclaycard.Security.Security;
 import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
 import com.example.rishikapriya.barclaycard.communication.AmazonProductGateway;
 import com.example.rishikapriya.barclaycard.communication.ServerCommunication;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
-import com.example.rishikapriya.barclaycard.constants.Constants;
 import com.example.rishikapriya.barclaycard.deals.MyOffersFragment;
-import com.example.rishikapriya.barclaycard.model.Account;
+import com.example.rishikapriya.barclaycard.deals.ProductsFragment;
 import com.example.rishikapriya.barclaycard.model.CreateWalletResponse;
+import com.example.rishikapriya.barclaycard.model.Item;
 import com.example.rishikapriya.barclaycard.service.AddAmountService;
 import com.example.rishikapriya.barclaycard.service.CreateWalletService;
-import com.example.rishikapriya.barclaycard.service.GetWalletInfoService;
-import com.example.rishikapriya.barclaycard.summary.AccountSummaryFragment;
+import com.example.rishikapriya.barclaycard.wallets.WalletFragment;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -58,29 +56,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        showMyOffersFragment();
         createWallet();
+
+        if(getIntent().getExtras() != null){
+            Item item = new Item(
+                    getIntent().getStringExtra("name"),
+                    getIntent().getStringExtra("boughtPrice"),
+                    getIntent().getStringExtra("currentPrice"),
+                    getIntent().getStringExtra("asin"),
+                    R.mipmap.ic_product
+            );
+            showProductSummaryFragment(item);
+        }else{
+            showMyOffersFragment();
+        }
+    }
+
+    private void showProductSummaryFragment(Item item) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, ProductsFragment.getInstance(this, item),ProductsFragment.class.toString()).commit();
     }
 
     private void createWallet() {
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     AddAmountService.addAmount("TOP UP", "PublicTransport", new WebResponseListener() {
                                 @Override
                                 public void onReceiveResponse(Object response) {
-                                    showAccountSummaryFragment();
+                                    showWalledListInfoFragment();
                                 }
 
                                 @Override
@@ -172,8 +177,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, MyOffersFragment.newInstance(this),MyOffersFragment.class.toString()).commit();
     }
 
-    private void showAccountSummaryFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, AccountSummaryFragment.newInstance(new Account()),AccountSummaryFragment.class.toString()).commit();
+    private void showWalledListInfoFragment() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, WalletFragment.newInstance(this),WalletFragment.class.toString()).commit();
     }
 
     @Override
@@ -215,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_summary) {
-            showAccountSummaryFragment();
+            showWalledListInfoFragment();
         } else if (id == R.id.nav_deals) {
             showMyOffersFragment();
         } else if (id == R.id.nav_notification) {

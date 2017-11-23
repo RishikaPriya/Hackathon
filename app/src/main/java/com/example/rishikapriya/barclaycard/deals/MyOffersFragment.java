@@ -38,7 +38,7 @@ public class MyOffersFragment extends Fragment {
         offersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,ProductsFragment.getInstance(context),ProductsFragment.class.toString()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,ProductsFragment.getInstance(context, null),ProductsFragment.class.toString()).commit();
                 //getActivity().getFragmentManager().beginTransaction().add(ProductsFragment.getInstance(context), "fads").commitAllowingStateLoss();
             }
         });

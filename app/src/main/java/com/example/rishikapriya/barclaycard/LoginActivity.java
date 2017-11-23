@@ -34,6 +34,7 @@ import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
 import com.example.rishikapriya.barclaycard.constants.Constants;
 import com.example.rishikapriya.barclaycard.model.OAuthAccessTokenResponse;
 import com.example.rishikapriya.barclaycard.service.LoginService;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -95,6 +96,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         mProgressView = findViewById(R.id.login_progress);
 
         getAppAccessToken();
+        String token = FirebaseInstanceId.getInstance().getToken();
+        System.out.println("notification token === " + token);
 
         setDeviceInstanceId();
     }

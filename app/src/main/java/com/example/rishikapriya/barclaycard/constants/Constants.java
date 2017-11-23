@@ -14,6 +14,7 @@ public final class Constants {
     public static final String CREATE_WALLET = API_BASE_URL + "wallet/CreateWallet";
     public static final String INITIATE_PAYMENT = API_BASE_URL + "wallet/InitiatePayment";
     public static final String GET_WALLET_INFO = API_BASE_URL + "wallet/GetWalletInfo?walletCode=";
+    public static final String GET_WALLET_LIST_INFO = API_BASE_URL + "wallet/GetWalletList?pageSize=10&pageNum=1";
     public static final String API_SUCCESS_CODE = "000000";
 
     public static final String CONSUMER_KEY = "BNJcXtG7De1EFRssRGN2y52gbD8a";
