@@ -59,4 +59,10 @@
     <string name="next">Continue</string>
     <string name="transaction_successful">Transaction Successful</string>
     <string name="transaction_successful_message">You have successfully transferred the amount.</string>
+    <string name="date">Date</string>
+    <string name="withdraw">Transation Amount</string>
+    <string name="reference_code">Ref No.</string>
+    <string name="transaction_desc">Description</string>
+    <string name="value_date">Value Date</string>
+    <string name="closing_balance">Closing Balance</string>
 </resources>

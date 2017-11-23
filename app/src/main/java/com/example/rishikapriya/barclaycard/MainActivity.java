@@ -26,6 +26,7 @@ import com.example.rishikapriya.barclaycard.model.CreateWalletResponse;
 import com.example.rishikapriya.barclaycard.model.Item;
 import com.example.rishikapriya.barclaycard.service.AddAmountService;
 import com.example.rishikapriya.barclaycard.service.CreateWalletService;
+import com.example.rishikapriya.barclaycard.wallets.TransactionsFragment;
 import com.example.rishikapriya.barclaycard.wallets.WalletFragment;
 import com.google.gson.Gson;
 
@@ -231,11 +232,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_rewards) {
 
         } else if (id == R.id.nav_transactions) {
-
+            showTransactionFragment();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showTransactionFragment() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, TransactionsFragment.newInstance(),TransactionsFragment.class.toString()).commit();
     }
 }

@@ -3,6 +3,7 @@ package com.example.rishikapriya.barclaycard.service;
 import android.support.annotation.NonNull;
 
 import com.example.rishikapriya.barclaycard.Security.Security;
+import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
 import com.example.rishikapriya.barclaycard.communication.ServerCommunication;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
 import com.example.rishikapriya.barclaycard.constants.Constants;
@@ -10,6 +11,7 @@ import com.example.rishikapriya.barclaycard.constants.Constants;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.rishikapriya.barclaycard.Utils.CommonUtils.getCurrentDate;
 import static com.example.rishikapriya.barclaycard.constants.Constants.*;
 
 /**
@@ -51,7 +53,7 @@ public class TransferMoneyService {
         Map<String,String> request = new HashMap<>();
         request.put("FromWalletCode",fromWallet);
         request.put("ToWalletCode",toWallet);
-        request.put("Date","01/01/2016");
+        request.put("Date", getCurrentDate());
         request.put("Amount",amount);
         request.put("Reason", reason);
 

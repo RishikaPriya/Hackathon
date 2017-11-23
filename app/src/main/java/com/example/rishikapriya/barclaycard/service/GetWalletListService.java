@@ -23,6 +23,10 @@ public class GetWalletListService {
         headers.put("DeviceId", QUICKSTART_DEVICE_ID);
 
 
-        ServerCommunication.getmInstance().addJSONGetRequest(GET_WALLET_LIST_INFO, null, headers, listener);
+        Map<String, String> params = new HashMap<>();
+        params.put("pageSize", "100");
+        params.put("pageNum", "1");
+
+        ServerCommunication.getmInstance().addJSONGetRequest(GET_WALLET_LIST_INFO, params, headers, listener);
     }
 }

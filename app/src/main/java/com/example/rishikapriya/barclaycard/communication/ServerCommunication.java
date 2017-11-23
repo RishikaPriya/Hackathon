@@ -144,7 +144,7 @@ public class ServerCommunication {
         JsonObjectRequest jsonObjectRequest =
                 new JsonObjectRequest(
                         Request.Method.GET,
-                        url,null,
+                        url + getStringFromRequest(requestParameters),null,
                         new ResponseListener<>(webResponseListener),
                         new ErrorListener(webResponseListener)){
                     @Override

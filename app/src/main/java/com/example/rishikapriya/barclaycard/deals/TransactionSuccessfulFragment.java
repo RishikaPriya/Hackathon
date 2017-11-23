@@ -49,22 +49,7 @@ public class TransactionSuccessfulFragment extends Fragment {
             }
         });
 
-        getWalletInfo();
         return view;
-    }
-
-    private void getWalletInfo() {
-        GetWalletInfoService.getWalletInfo(new WebResponseListener() {
-            @Override
-            public void onReceiveResponse(Object response) {
-                System.out.println("Wallet now");
-            }
-
-            @Override
-            public void onReceiveError(VolleyError volleyError) {
-
-            }
-        });
     }
 
     private void showHomeScreen() {

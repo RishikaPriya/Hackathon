@@ -30,6 +30,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_15dp"
         android:text="My Bank"
         android:gravity="center"
         android:textStyle="bold"
@@ -81,7 +82,7 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/dimen_15dp"
                 android:background="@color/grey_blue"
                 android:textColor="@color/white"
                 android:text="@string/action_sign_in"

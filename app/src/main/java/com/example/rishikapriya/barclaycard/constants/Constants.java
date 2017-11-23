@@ -16,7 +16,11 @@ public final class Constants {
     public static final String CONFIRM_PAYMENT = API_BASE_URL + "wallet/ConfirmPayment";
     public static final String TRANSFER_AMOUNT = API_BASE_URL + "wallet/TransferValue";
     public static final String GET_WALLET_INFO = API_BASE_URL + "wallet/GetWalletInfo?walletCode=";
-    public static final String GET_WALLET_LIST_INFO = API_BASE_URL + "wallet/GetWalletList?pageSize=100&pageNum=1";
+    public static final String GET_WALLET_LIST_INFO = API_BASE_URL + "wallet/GetWalletList?";
+    public static final String GET_ALL_TRANSACTION = API_BASE_URL + "cashflow/GetTransactionList?";
+
+
+
     public static final String API_SUCCESS_CODE = "000000";
     public static final String PIN = "123456";
     public static final String VENDOR_WALLET_CODE = "5271772269521760491";
