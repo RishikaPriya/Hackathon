@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.rishikapriya.barclaycard.MainActivity;
@@ -33,6 +35,8 @@ import java.util.List;
 public class WalletFragment extends Fragment{
 
     private Activity context;
+    private TextView errorTextView;
+    private ProgressBar mProgressBar;
     private ListView listView;
 
     public static Fragment newInstance(Activity context) {
@@ -47,6 +51,8 @@ public class WalletFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.wallet_list_fragment_layout,null,false);
 
+        errorTextView = view.findViewById(R.id.tv_errorText);
+        mProgressBar = view.findViewById(R.id.progress_bar);
         listView = view.findViewById(R.id.list_view);
         getWalletList();
         return view;
@@ -56,6 +62,7 @@ public class WalletFragment extends Fragment{
         GetWalletListService.getWalletList(new WebResponseListener() {
             @Override
             public void onReceiveResponse(Object response) {
+                mProgressBar.setVisibility(View.GONE);
                 Gson gson =  new Gson();
                 WalletListResponse walletListResponse = gson.fromJson(response.toString(), WalletListResponse.class);
                 setListAdapter(walletListResponse.getWalletListInfo());
@@ -63,7 +70,8 @@ public class WalletFragment extends Fragment{
 
             @Override
             public void onReceiveError(VolleyError volleyError) {
-
+                mProgressBar.setVisibility(View.GONE);
+                errorTextView.setVisibility(View.VISIBLE);
             }
         });
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -35,6 +36,8 @@ public class TransactionsFragment extends Fragment {
     private ListView listView;
     private String fromFragment;
     private String walletCode;
+    private ProgressBar mProgressBar;
+    private TextView errorTextView;
 
     public static Fragment newInstance(String fromFragment, String walletCode) {
         TransactionsFragment transactionsFragment = new TransactionsFragment();
@@ -47,6 +50,9 @@ public class TransactionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.transactions, null, false);
+
+        mProgressBar = view.findViewById(R.id.progress_bar);
+        errorTextView = view.findViewById(R.id.tv_errorText);
 
         transactionMessage = view.findViewById(R.id.message);
         listView = view.findViewById(R.id.list_view);
@@ -62,12 +68,14 @@ public class TransactionsFragment extends Fragment {
         GetWalletTransactionService.getWalletTransactions(walletCode, new WebResponseListener() {
             @Override
             public void onReceiveResponse(Object response) {
+                mProgressBar.setVisibility(View.GONE);
                 setListWithResponseData(response);
             }
 
             @Override
             public void onReceiveError(VolleyError volleyError) {
-
+                mProgressBar.setVisibility(View.GONE);
+                errorTextView.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -85,12 +93,14 @@ public class TransactionsFragment extends Fragment {
         GetTransactionService.getTransactions(new WebResponseListener() {
             @Override
             public void onReceiveResponse(Object response) {
+                mProgressBar.setVisibility(View.GONE);
                 setListWithResponseData(response);
             }
 
             @Override
             public void onReceiveError(VolleyError volleyError) {
-
+                mProgressBar.setVisibility(View.GONE);
+                errorTextView.setVisibility(View.VISIBLE);
             }
         });
 
