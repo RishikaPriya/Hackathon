@@ -41,7 +41,7 @@ public class FundTransferFragment extends Fragment {
     }
 
     private boolean isValid(EditText account_number, EditText amount) {
-        return CommonUtils.checkNullOrEmpty(account_number.toString()) && CommonUtils.checkNullOrEmpty(amount.toString());
+        return !(CommonUtils.checkNullOrEmpty(account_number.toString()) && CommonUtils.checkNullOrEmpty(amount.toString()));
     }
 
     private View.OnClickListener transferListener = new View.OnClickListener() {

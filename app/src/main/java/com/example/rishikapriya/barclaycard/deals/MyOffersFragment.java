@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.rishikapriya.barclaycard.R;
+import com.example.rishikapriya.barclaycard.flight.FlightFragment;
 
 
 /**
@@ -30,8 +31,10 @@ public class MyOffersFragment extends Fragment {
         View view = inflater.inflate(R.layout.offers_layout,null,false);
         RelativeLayout offersLayout = view.findViewById(R.id.rl_offers);
         RelativeLayout fundTransferLayout = view.findViewById(R.id.rl_fund_transfer);
+        RelativeLayout flightLayout = view.findViewById(R.id.rl_flight);
         offersLayout.setOnClickListener(offerListener);
         fundTransferLayout.setOnClickListener(fundListener);
+        flightLayout.setOnClickListener(flightListenser);
         return view;
     }
 
@@ -46,6 +49,13 @@ public class MyOffersFragment extends Fragment {
         @Override
         public void onClick(View v) {
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,FundTransferFragment.getInstance(),FundTransferFragment.class.toString()).commit();
+        }
+    };
+
+    private View.OnClickListener flightListenser = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, FlightFragment.getInstance(),FlightFragment.class.toString()).commit();
         }
     };
 

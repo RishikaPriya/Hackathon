@@ -65,4 +65,11 @@
     <string name="transaction_desc">Description</string>
     <string name="value_date">Value Date</string>
     <string name="closing_balance">Closing Balance</string>
+    <string name="from">Source</string>
+    <string name="to">Destination</string>
+    <string name="nameHeader">Name</string>
+    <string name="phone">Mobile Number</string>
+    <string name="email">Email Id</string>
+    <string name="flight_booked">Your flight was booked successfully.</string>
+    <string name="total_amount">Amount</string>
 </resources>
