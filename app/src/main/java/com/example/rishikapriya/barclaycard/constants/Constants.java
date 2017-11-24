@@ -18,6 +18,7 @@ public final class Constants {
     public static final String GET_WALLET_INFO = API_BASE_URL + "wallet/GetWalletInfo?walletCode=";
     public static final String GET_WALLET_LIST_INFO = API_BASE_URL + "wallet/GetWalletList?";
     public static final String GET_ALL_TRANSACTION = API_BASE_URL + "cashflow/GetTransactionList?";
+    public static final String GET_WALLET_TRANSACTION = API_BASE_URL + "wallet/GetWalletTransactions?";
 
 
 

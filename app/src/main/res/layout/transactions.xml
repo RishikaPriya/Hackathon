@@ -19,6 +19,20 @@
             android:textSize="@dimen/dimen_20sp"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10dp"
+        android:text="@string/transaction_not_found"
+        android:layout_below="@+id/headerLayout"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/grey_blue"
+        android:textSize="@dimen/dimen_20sp"
+        android:visibility="gone"/>
+
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
