@@ -1,6 +1,8 @@
 package com.example.rishikapriya.barclaycard;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +24,7 @@ import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
 import com.example.rishikapriya.barclaycard.communication.AmazonProductGateway;
 import com.example.rishikapriya.barclaycard.communication.ServerCommunication;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
+import com.example.rishikapriya.barclaycard.constants.Constants;
 import com.example.rishikapriya.barclaycard.deals.MyOffersFragment;
 import com.example.rishikapriya.barclaycard.deals.ProductsFragment;
 import com.example.rishikapriya.barclaycard.model.CreateWalletResponse;
@@ -39,6 +42,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.example.rishikapriya.barclaycard.constants.Constants.API_SUCCESS_CODE;
+import static com.example.rishikapriya.barclaycard.constants.Constants.IS_LOGIN;
 import static com.example.rishikapriya.barclaycard.constants.Constants.MINIMUM_AMOUNT;
 
 import org.json.JSONException;
@@ -59,6 +63,8 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     int backPressCount;
+    private SharedPreferences sharedpreferences;
+    private SharedPreferences.Editor editor;
 
 
     @Override
@@ -67,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        sharedpreferences = getSharedPreferences(Constants.PREF, Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -234,7 +243,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            logout();
             return true;
         }
 
@@ -264,6 +274,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+        editor.putBoolean(IS_LOGIN, false);
+        editor.commit();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+
+        startActivity(intent);
+        finish();
     }
 
     private void showTransactionFragment() {
