@@ -156,10 +156,12 @@ public class TransactionsFragment extends Fragment {
             }else{
                 holder = (TransactionsFragment.TransactionListAdapter.ViewHolder) convertView.getTag();
             }
+            String[] refNos =  transactionInfo.get(position).getReferenceNumber().split("-");
+            String refNo = refNos[refNos.length -1];
 
             holder.startDate.setText(formatDate(transactionInfo.get(position).getStartDate()));
             holder.endDate.setText(formatDate(transactionInfo.get(position).getEndDate()));
-            holder.referenceNo.setText(transactionInfo.get(position).getReferenceNumber());
+            holder.referenceNo.setText(refNo);
             holder.transactionAmount.setText(transactionInfo.get(position).getTransaction_amount());
             holder.description.setText(transactionInfo.get(position).getDescription());
             holder.closingBalance.setText(transactionInfo.get(position).getClosing_balance());
