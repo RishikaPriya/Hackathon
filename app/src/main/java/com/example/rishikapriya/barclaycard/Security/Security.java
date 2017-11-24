@@ -1,7 +1,5 @@
 package com.example.rishikapriya.barclaycard.Security;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.example.rishikapriya.barclaycard.ApplicationController;
 import com.example.rishikapriya.barclaycard.constants.Constants;
