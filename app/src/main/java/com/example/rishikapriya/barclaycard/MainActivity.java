@@ -1,5 +1,6 @@
 package com.example.rishikapriya.barclaycard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.rishikapriya.barclaycard.Security.Security;
@@ -32,7 +34,9 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.example.rishikapriya.barclaycard.constants.Constants.API_SUCCESS_CODE;
 import static com.example.rishikapriya.barclaycard.constants.Constants.MINIMUM_AMOUNT;
@@ -54,6 +58,9 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    int backPressCount;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,22 +79,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         createWallet();
         if(getIntent().getExtras() != null){
-            Item item = new Item(
-                    getIntent().getStringExtra("name"),
-                    getIntent().getStringExtra("boughtPrice"),
-                    getIntent().getStringExtra("currentPrice"),
-                    getIntent().getStringExtra("asin"),
-                    R.mipmap.ic_product
-            );
-            showProductSummaryFragment(item);
+            Intent intent = getIntent();
+
+
+            int size = intent.getIntExtra("NO_OF_ITEMS",0);
+            List<Item> list = new ArrayList<>();
+            for(int i=1;i<=size;i++) {
+                Item item = new Item(intent.getStringExtra("item"+i),intent.getStringExtra("item"+i+"bought_price"),
+                        intent.getStringExtra("item"+i+"current_price"),null,intent.getIntExtra("item"+i+"image_id",R.mipmap.ic_product));
+                list.add(item);
+            }
+            showProductSummaryFragment(list);
         }else{
             showMyOffersFragment();
         }
     }
 
 
-    private void showProductSummaryFragment(Item item) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, ProductsFragment.getInstance(this, item),ProductsFragment.class.toString()).commit();
+    private void showProductSummaryFragment(List<Item> itemList) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, ProductsFragment.getInstance(this, itemList),ProductsFragment.class.toString()).commit();
     }
 
     private void createWallet() {
@@ -189,7 +199,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(backPressCount==0){
+                Toast.makeText(this,"Press back again to exit",Toast.LENGTH_SHORT).show();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(2000);
+                            backPressCount = 0;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+                backPressCount++;
+            }else
+                System.exit(0);
         }
     }
 
@@ -243,4 +269,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showTransactionFragment() {
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, TransactionsFragment.newInstance(),TransactionsFragment.class.toString()).commit();
     }
+
+
 }

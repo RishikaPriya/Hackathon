@@ -14,6 +14,8 @@ import com.example.rishikapriya.barclaycard.model.Item;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+
 /**
  * Created by rishikapriya on 10/11/17.
  */
@@ -43,19 +45,30 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, "WEB")
-                                    .setContentTitle(remoteMessage.getData().get("title"))
-                                    .setContentText(remoteMessage.getData().get("body"))
+                                    .setContentTitle("Offer!")
+                                    .setContentText("Best Offers for you")
                                     .setSmallIcon(R.mipmap.ic_notification)
                                     .setAutoCancel(true)
-                                    .addAction(0, "View", pendingIntent);
+                                    .setContentIntent(pendingIntent);
+
 
         notificationManager.notify(0, notification.build());
     }
 
     private void setIntentExtras(RemoteMessage remoteMessage, Intent intent) {
-        intent.putExtra("name", remoteMessage.getData().get("name"));
-        intent.putExtra("asin", remoteMessage.getData().get("ASIN"));
-        intent.putExtra("boughtPrice", remoteMessage.getData().get("boughtPrice"));
-        intent.putExtra("currentPrice", remoteMessage.getData().get("currentPrice"));
+        Map<String,String> data = remoteMessage.getData();
+
+        if(data!=null && data.size()!=0){
+            intent.putExtra("NO_OF_ITEMS",data.size());
+            int i = 1;
+            for(String keys : data.keySet()){
+                intent.putExtra("item"+i,keys);
+                String[] itemValues = data.get(keys).split(",");
+                intent.putExtra("item"+i+"bought_price",itemValues[0]);
+                intent.putExtra("item"+i+"current_price",itemValues[1]);
+                intent.putExtra("item"+i+"image_id",Integer.parseInt(itemValues[2]));
+                i++;
+            }
+        }
     }
 }

@@ -47,7 +47,7 @@ public class ProductsFragment extends Fragment {
     private TextView boughtAt;
     private TextView newPrice;
     private ListView listView;
-    private Item item;
+    private List<Item> itemList;
     private ProductAdapter adapter;
     private Map<String,Item> itemPriceMap, itemAsinMap;
     private static final String ASIN_SURF = "B00TS88UZW";
@@ -57,10 +57,10 @@ public class ProductsFragment extends Fragment {
     private static final String ASIN_FACEWASH = "B007921JYI";
     private static final String ASIN_RICE = "B00SWKBO0K";
 
-    public static Fragment getInstance(Activity context, Item item) {
+    public static Fragment getInstance(Activity context,  List<Item>itemList) {
         ProductsFragment fragment = new ProductsFragment();
         fragment.activity = context;
-        fragment.item = item;
+        fragment.itemList = itemList;
         return fragment;
     }
 
@@ -72,11 +72,14 @@ public class ProductsFragment extends Fragment {
         List<Item> list = new ArrayList<>();
         adapter = new ProductAdapter(list,getActivity());
         listView.setAdapter(adapter);
-        if(item != null){
-            adapter.addProductToList(item);
-            adapter.notifyDataSetChanged();
+        if(itemList != null && itemList.size()!=0){
+            for(Item item : itemList){
+                adapter.addProductToList(item);
+                adapter.notifyDataSetChanged();
+            }
+        }else {
+            createMapOfItems();
         }
-        createMapOfItems();
         return view;
     }
 

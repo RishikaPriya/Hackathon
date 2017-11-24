@@ -1,12 +1,15 @@
 package com.example.rishikapriya.barclaycard;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.LoaderManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -30,17 +33,22 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.example.rishikapriya.barclaycard.Security.Security;
+import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
 import com.example.rishikapriya.barclaycard.constants.Constants;
 import com.example.rishikapriya.barclaycard.model.OAuthAccessTokenResponse;
+import com.example.rishikapriya.barclaycard.service.AlarmReceiver;
 import com.example.rishikapriya.barclaycard.service.LoginService;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static com.example.rishikapriya.barclaycard.constants.Constants.IS_LOGIN;
+import static com.example.rishikapriya.barclaycard.constants.Constants.TOKEN;
 
 /**
  * Created by rishikapriya on 08/11/17.
@@ -63,10 +71,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private SharedPreferences sharedpreferences;
+    private SharedPreferences.Editor editor;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedpreferences = getSharedPreferences(Constants.PREF, Context.MODE_PRIVATE);
+        boolean isLogin = sharedpreferences.getBoolean(IS_LOGIN,false);
+        editor = sharedpreferences.edit();
+
+        if(isLogin){
+            successfulLogin();
+        }
         setContentView(R.layout.login_page);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -83,6 +102,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
                 return false;
             }
         });
+
+
+        CommonUtils.setAlarm(this,Calendar.SECOND,30);
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +252,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
                     Gson gson =  new Gson();
                     OAuthAccessTokenResponse authAccessToken = gson.fromJson(response.toString(), OAuthAccessTokenResponse.class);
                     Security.getInstance().setUserAccessToken(authAccessToken.getAccessToken());
+                    setSharedPreferences(authAccessToken.getAccessToken());
                     successfulLogin();
                 }
 
@@ -306,7 +330,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
     private void successfulLogin() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
         startActivity(intent);
+        finish();
+    }
+
+    private void setSharedPreferences(String token) {
+        editor.putBoolean(IS_LOGIN,true);
+        editor.putString(TOKEN,token);
+        editor.commit();
     }
 
     private interface ProfileQuery {

@@ -19,7 +19,10 @@ public final class Constants {
     public static final String GET_WALLET_LIST_INFO = API_BASE_URL + "wallet/GetWalletList?";
     public static final String GET_ALL_TRANSACTION = API_BASE_URL + "cashflow/GetTransactionList?";
 
+    public static final String SEND_NOTIFICATION = "https://fcm.googleapis.com/fcm/send";
+    public static final String AUTH_KEY = "key=AAAA0b4dEU8:APA91bHYDc7HawBlT5eR93bTtaHMM739fwl3YvqPEeNvztWV65WbjeL5KC_Dp4phUrdTaVxNve0BCxlBpBrR5xhtUZJfBZZTvJ0lYPZhzOu07JyXpfFl04V1290jkRKjaqYZOol6EGfc";
 
+    public static final String PREF = "PREFERENCES";
 
     public static final String API_SUCCESS_CODE = "000000";
     public static final String PIN = "123456";
@@ -39,6 +42,7 @@ public final class Constants {
     public static final String TRANSFER_REASON = "Transfer";
     public static final String PURCHASE_REASON = "Purchase";
 
-
+    public static final String IS_LOGIN = "ISLOGIN";
+    public static final String TOKEN = "TOKEN";
     private Constants() {}
 }

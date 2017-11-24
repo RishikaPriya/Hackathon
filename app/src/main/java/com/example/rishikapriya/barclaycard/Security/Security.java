@@ -1,5 +1,10 @@
 package com.example.rishikapriya.barclaycard.Security;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.example.rishikapriya.barclaycard.ApplicationController;
+import com.example.rishikapriya.barclaycard.constants.Constants;
 import com.example.rishikapriya.barclaycard.model.Item;
 
 /**
@@ -16,12 +21,15 @@ public class Security {
     private Item item;
     private double balance;
 
-
     public static Security getInstance(){
         if(instance == null){
             instance = new Security();
+
         }
         return instance;
+    }
+
+    private Security(){
     }
 
     public String getAuthorizationKey() {
@@ -49,7 +57,7 @@ public class Security {
     }
 
     public String getUserAccessToken() {
-        return userAccessToken;
+        return ApplicationController.getInstance().getPreferance(Constants.TOKEN);
     }
 
     public void setUserAccessToken(String userAccessToken) {

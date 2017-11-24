@@ -169,6 +169,24 @@ public class ServerCommunication {
         this.deviceId = deviceId;
     }
 
+    public void addJSONPostRequestWithJsonData(String url, final Map<String, String> headers, JSONObject request, final WebResponseListener webResponseListener) {
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        url,request,
+                        new ResponseListener(webResponseListener),
+                        new ErrorListener(webResponseListener)){
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        return headers;
+                    }
+
+                };
+
+        ApplicationController.getInstance().getRequestQueue().add(jsonObjectRequest);
+    }
+
 
     private class ResponseListener<T> implements Response.Listener<T> {
 
