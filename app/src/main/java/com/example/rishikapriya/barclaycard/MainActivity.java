@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showTransactionFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, TransactionsFragment.newInstance(),TransactionsFragment.class.toString()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, TransactionsFragment.newInstance(MainActivity.class.toString(), null),TransactionsFragment.class.toString()).commit();
     }
 
 

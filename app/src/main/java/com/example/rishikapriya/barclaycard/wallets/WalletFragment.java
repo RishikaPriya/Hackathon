@@ -13,12 +13,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.example.rishikapriya.barclaycard.MainActivity;
 import com.example.rishikapriya.barclaycard.R;
 import com.example.rishikapriya.barclaycard.Security.Security;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
+import com.example.rishikapriya.barclaycard.deals.ProductsFragment;
 import com.example.rishikapriya.barclaycard.model.WalletInfo;
 import com.example.rishikapriya.barclaycard.model.WalletListResponse;
 import com.example.rishikapriya.barclaycard.service.GetWalletListService;
+import com.example.rishikapriya.barclaycard.service.GetWalletTransactionService;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -67,7 +70,7 @@ public class WalletFragment extends Fragment{
     }
 
     private void setListAdapter(List<WalletInfo> walletListInfo) {
-        listView.setAdapter(new WalletAdapter(walletListInfo, getActivity()));
+        listView.setAdapter(new WalletAdapter(walletListInfo, getActivity(), 0));
     }
 
 
@@ -76,11 +79,14 @@ public class WalletFragment extends Fragment{
         private final LayoutInflater inflater;
         private List<WalletInfo> walletList;
         private Context context;
+        private int selectedItem;
+        private String walletCode;
 
-        private WalletAdapter(List<WalletInfo> list, Context context){
+        private WalletAdapter(List<WalletInfo> list, Context context, int selectedItem){
 
             this.walletList = list;
             this.inflater = LayoutInflater.from(context);
+            this.selectedItem = selectedItem;
             this.context = context;
         }
 
@@ -115,8 +121,21 @@ public class WalletFragment extends Fragment{
             holder.cardName.setText(walletList.get(position).getWalletName());
             holder.currentBalance.setText(walletList.get(position).getCurrentBalance());
 
+            View.OnClickListener walletClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedItem = position;
+                    walletCode = walletList.get(position).getWalletCode();
+                    WalletFragment.WalletAdapter.this.notifyDataSetChanged();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, TransactionsFragment.newInstance(WalletFragment.class.toString(), walletCode),TransactionsFragment.class.toString()).commit();
+                }
+            };
+
+            convertView.setOnClickListener(walletClickListener);
             return convertView;
         }
+
+
 
         class ViewHolder {
             TextView cardName;

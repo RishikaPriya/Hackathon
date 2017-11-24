@@ -18,6 +18,7 @@ import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
 import com.example.rishikapriya.barclaycard.model.TransactionInfo;
 import com.example.rishikapriya.barclaycard.model.TransactionListResponse;
 import com.example.rishikapriya.barclaycard.service.GetTransactionService;
+import com.example.rishikapriya.barclaycard.service.GetWalletTransactionService;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -30,28 +31,61 @@ import static com.example.rishikapriya.barclaycard.Utils.CommonUtils.formatDate;
 
 public class TransactionsFragment extends Fragment {
 
+    private TextView transactionMessage;
     private ListView listView;
+    private String fromFragment;
+    private String walletCode;
 
-    public static Fragment newInstance() {
-        return new TransactionsFragment();
+    public static Fragment newInstance(String fromFragment, String walletCode) {
+        TransactionsFragment transactionsFragment = new TransactionsFragment();
+        transactionsFragment.fromFragment = fromFragment;
+        transactionsFragment.walletCode = walletCode;
+        return transactionsFragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.transactions, null, false);
+
+        transactionMessage = view.findViewById(R.id.message);
         listView = view.findViewById(R.id.list_view);
-        getTransactionList();
+        if(fromFragment.contains("MainActivity")){
+            getTransactionList();
+        }else if(fromFragment.contains("WalletFragment")){
+            getWalletTransaction();
+        }
         return view;
+    }
+
+    private void getWalletTransaction() {
+        GetWalletTransactionService.getWalletTransactions(walletCode, new WebResponseListener() {
+            @Override
+            public void onReceiveResponse(Object response) {
+                setListWithResponseData(response);
+            }
+
+            @Override
+            public void onReceiveError(VolleyError volleyError) {
+
+            }
+        });
+    }
+
+    private void setListWithResponseData(Object response) {
+        Gson gson = new Gson();
+        TransactionListResponse transactionListResponse = gson.fromJson(response.toString(), TransactionListResponse.class);
+        setListAdapter(transactionListResponse.getTransactionListInfo());
+        if(transactionListResponse.getTransactionListInfo().size() == 0){
+            transactionMessage.setVisibility(View.VISIBLE);
+        }
     }
 
     private void getTransactionList() {
         GetTransactionService.getTransactions(new WebResponseListener() {
             @Override
             public void onReceiveResponse(Object response) {
-                Gson gson = new Gson();
-                TransactionListResponse transactionListResponse = gson.fromJson(response.toString(), TransactionListResponse.class);
-                setListAdapter(transactionListResponse.getTransactionListInfo());
+                setListWithResponseData(response);
             }
 
             @Override

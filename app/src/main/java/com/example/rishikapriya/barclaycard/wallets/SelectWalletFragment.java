@@ -79,6 +79,9 @@ public class SelectWalletFragment extends Fragment {
                             else if(fromFragment.contains("SelectAddressFragment")){
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
                                             TransactionSuccessfulFragment.getInstance(getString(R.string.payment_successful), getString(R.string.order_placed))).commit();
+                            }else if(fromFragment.contains("FlightFragment")){
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
+                                        TransactionSuccessfulFragment.getInstance(getString(R.string.payment_successful), getString(R.string.flight_booked))).commit();
                             }
                     }
                 }
