@@ -1,6 +1,8 @@
 package com.example.rishikapriya.barclaycard;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
@@ -19,6 +21,7 @@ import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
 import com.example.rishikapriya.barclaycard.communication.AmazonProductGateway;
 import com.example.rishikapriya.barclaycard.communication.ServerCommunication;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
+import com.example.rishikapriya.barclaycard.constants.Constants;
 import com.example.rishikapriya.barclaycard.database.DatabaseHandler;
 import com.example.rishikapriya.barclaycard.deals.MyOffersFragment;
 import com.example.rishikapriya.barclaycard.deals.ProductsFragment;
@@ -38,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.rishikapriya.barclaycard.constants.Constants.API_SUCCESS_CODE;
+import static com.example.rishikapriya.barclaycard.constants.Constants.IS_LOGIN;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private int backPressCount;
     private DatabaseHandler db;
+    private SharedPreferences sharedpreferences;
+    private SharedPreferences.Editor editor;
 
 
     @Override
@@ -64,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = new DatabaseHandler(this);
+        sharedpreferences = getSharedPreferences(Constants.PREF, Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -259,11 +267,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            logout();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        editor.putBoolean(IS_LOGIN, false);
+        editor.commit();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+
+        startActivity(intent);
+        finish();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
