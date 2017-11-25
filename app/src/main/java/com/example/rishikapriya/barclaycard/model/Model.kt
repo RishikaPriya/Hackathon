@@ -20,9 +20,18 @@ class Wallet(
     val walletCode: String? = null
 );
 
-class OAuthAccessTokenResponse(@SerializedName("scope") val scope: String, @SerializedName("token_type") val token: String,
-                               @SerializedName("expires_in") val expiresIn: String, @SerializedName("access_token") val accessToken: String,
-                               @SerializedName("refresh_token") val refresh_token: String);
+class OAuthAccessTokenResponse(
+        @SerializedName("scope")
+        val scope: String,
+        @SerializedName("token_type")
+        val token: String,
+        @SerializedName("expires_in")
+        val expiresIn: String,
+        @SerializedName("access_token")
+        val accessToken: String,
+        @SerializedName("refresh_token")
+        val refresh_token: String
+);
 
 class InitiatePaymentResponse(
     @SerializedName("DataObject")
@@ -98,4 +107,12 @@ class TransactionInfo(
         val transaction_amount: String? = null,
         @SerializedName("BalanceAfter")
         val closing_balance: String? =null
+);
+
+class Notification(
+        val title: String,
+        val description: String,
+        val link: String,
+        val validity_date: String,
+        val category: String
 );

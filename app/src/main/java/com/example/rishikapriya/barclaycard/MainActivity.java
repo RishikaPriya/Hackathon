@@ -1,13 +1,8 @@
 package com.example.rishikapriya.barclaycard;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,11 +19,13 @@ import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
 import com.example.rishikapriya.barclaycard.communication.AmazonProductGateway;
 import com.example.rishikapriya.barclaycard.communication.ServerCommunication;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
-import com.example.rishikapriya.barclaycard.constants.Constants;
+import com.example.rishikapriya.barclaycard.database.DatabaseHandler;
 import com.example.rishikapriya.barclaycard.deals.MyOffersFragment;
 import com.example.rishikapriya.barclaycard.deals.ProductsFragment;
 import com.example.rishikapriya.barclaycard.model.CreateWalletResponse;
 import com.example.rishikapriya.barclaycard.model.Item;
+import com.example.rishikapriya.barclaycard.model.Notification;
+import com.example.rishikapriya.barclaycard.notification.NotificationFragment;
 import com.example.rishikapriya.barclaycard.service.AddAmountService;
 import com.example.rishikapriya.barclaycard.service.CreateWalletService;
 import com.example.rishikapriya.barclaycard.wallets.TransactionsFragment;
@@ -38,19 +35,15 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.example.rishikapriya.barclaycard.constants.Constants.API_SUCCESS_CODE;
-import static com.example.rishikapriya.barclaycard.constants.Constants.IS_LOGIN;
-import static com.example.rishikapriya.barclaycard.constants.Constants.MINIMUM_AMOUNT;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -62,20 +55,18 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    int backPressCount;
-    private SharedPreferences sharedpreferences;
-    private SharedPreferences.Editor editor;
+    private int backPressCount;
+    private DatabaseHandler db;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new DatabaseHandler(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        sharedpreferences = getSharedPreferences(Constants.PREF, Context.MODE_PRIVATE);
-        editor = sharedpreferences.edit();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -89,21 +80,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         createWallet();
         if(getIntent().getExtras() != null){
             Intent intent = getIntent();
-
-
-            int size = intent.getIntExtra("NO_OF_ITEMS",0);
-            List<Item> list = new ArrayList<>();
-            for(int i=1;i<=size;i++) {
-                Item item = new Item(intent.getStringExtra("item"+i),intent.getStringExtra("item"+i+"bought_price"),
-                        intent.getStringExtra("item"+i+"current_price"),null,intent.getIntExtra("item"+i+"image_id",R.mipmap.ic_product));
-                list.add(item);
+            String key = intent.getStringExtra("fragment");
+            if(key!=null && key.equals("PersonalizedData")){
+                showNotification(intent);
+            }else {
+                showProductOffer(intent);
             }
-            showProductSummaryFragment(list);
         }else{
             showMyOffersFragment();
         }
     }
 
+    private void showNotification(Intent intent) {
+        Notification notification = new Notification(
+                intent.getStringExtra("title"),
+                intent.getStringExtra("description"),
+                intent.getStringExtra("link"),
+                intent.getStringExtra("validity_date"),
+                intent.getStringExtra("category")
+        );
+
+        db.addNotification(notification);
+
+        showNotificationFragment();
+    }
+
+    private void showProductOffer(Intent intent) {
+        int size = intent.getIntExtra("NO_OF_ITEMS", 0);
+        List<Item> list = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            Item item = new Item(intent.getStringExtra("item" + i), intent.getStringExtra("item" + i + "bought_price"),
+                    intent.getStringExtra("item" + i + "current_price"), null, intent.getIntExtra("item" + i + "image_id", R.mipmap.ic_product));
+            list.add(item);
+        }
+        showProductSummaryFragment(list);
+    }
+
+
+    private void showNotificationFragment() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, NotificationFragment.getInstance(),NotificationFragment.class.toString()).commit();
+    }
 
     private void showProductSummaryFragment(List<Item> itemList) {
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, ProductsFragment.getInstance(this, itemList),ProductsFragment.class.toString()).commit();
@@ -243,8 +259,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            logout();
+        if (id == R.id.action_settings) {
             return true;
         }
 
@@ -274,15 +289,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void logout() {
-        editor.putBoolean(IS_LOGIN, false);
-        editor.commit();
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-
-        startActivity(intent);
-        finish();
     }
 
     private void showTransactionFragment() {

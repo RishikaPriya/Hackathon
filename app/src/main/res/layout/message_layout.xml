@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen_5dp">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10dp">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/grey_blue"
+            android:textSize="@dimen/dimen_20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/message_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_5dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/header"
+        android:layout_marginTop="@dimen/dimen_10dp">
+        <TextView
+            android:id="@+id/details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:textSize="@dimen/dimen_18sp"
+            android:textStyle="bold"
+            android:textColor="@color/grey_blue"
+            android:typeface="sans"/>
+        <TextView
+            android:id="@+id/link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:textSize="@dimen/dimen_18sp"
+            android:textStyle="bold"
+            android:autoLink="web"
+            android:textColor="@color/grey_blue"
+            android:typeface="sans"/>
+        <TextView
+            android:id="@+id/validity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:textSize="@dimen/dimen_18sp"
+            android:textStyle="bold"
+            android:autoLink="web"
+            android:textColor="@color/grey_blue"
+            android:typeface="sans"/>
+    </LinearLayout>
+
+</RelativeLayout>

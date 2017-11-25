@@ -54,4 +54,8 @@ public class ApplicationController extends Application {
         return sharedPreferences.getString(key, null);
     }
 
+    public boolean getPreferanceBoolean(String key){
+        return sharedPreferences.getBoolean(key, false);
+    }
+
 }
