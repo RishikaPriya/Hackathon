@@ -52,7 +52,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent1) {
         Log.d("AAYA","Alarm");
 
-        CommonUtils.setAlarm(context,Calendar.SECOND,30);
+        CommonUtils.setAlarm(context,Calendar.SECOND,70);
 
         createMapOfItems();
 

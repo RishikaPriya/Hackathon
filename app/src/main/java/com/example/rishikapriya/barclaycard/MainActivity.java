@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_deals) {
             showMyOffersFragment();
         } else if (id == R.id.nav_notification) {
-
+            showNotificationFragment();
         } else if (id == R.id.nav_payments) {
 
         } else if (id == R.id.nav_rewards) {

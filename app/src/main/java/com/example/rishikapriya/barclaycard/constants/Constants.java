@@ -45,5 +45,7 @@ public final class Constants {
 
     public static final String IS_LOGIN = "ISLOGIN";
     public static final String TOKEN = "TOKEN";
+
+    public static final String GET_OFFER_URL = "http://ec2-34-207-116-140.compute-1.amazonaws.com:9095/api/sendMobileTransaction";
     private Constants() {}
 }

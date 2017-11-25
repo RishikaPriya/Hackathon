@@ -18,14 +18,22 @@ import com.android.volley.VolleyError;
 import com.example.rishikapriya.barclaycard.R;
 import com.example.rishikapriya.barclaycard.communication.WebResponseListener;
 import com.example.rishikapriya.barclaycard.deals.TransactionSuccessfulFragment;
+import com.example.rishikapriya.barclaycard.model.Notification;
 import com.example.rishikapriya.barclaycard.model.StatusResponse;
 import com.example.rishikapriya.barclaycard.model.WalletInfo;
 import com.example.rishikapriya.barclaycard.model.WalletListResponse;
+import com.example.rishikapriya.barclaycard.service.CallGetOfferService;
 import com.example.rishikapriya.barclaycard.service.GetWalletListService;
+import com.example.rishikapriya.barclaycard.service.MyFirebaseMessagingService;
 import com.example.rishikapriya.barclaycard.service.TransferMoneyService;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.rishikapriya.barclaycard.constants.Constants.API_SUCCESS_CODE;
 

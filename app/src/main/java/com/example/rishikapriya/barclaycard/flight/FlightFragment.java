@@ -18,6 +18,7 @@ import com.example.rishikapriya.barclaycard.Utils.CommonUtils;
 import com.example.rishikapriya.barclaycard.deals.FundTransferFragment;
 import com.example.rishikapriya.barclaycard.wallets.SelectWalletFragment;
 
+import static com.example.rishikapriya.barclaycard.constants.Constants.PURCHASE_REASON;
 import static com.example.rishikapriya.barclaycard.constants.Constants.TRANSFER_REASON;
 import static com.example.rishikapriya.barclaycard.constants.Constants.VENDOR_WALLET_CODE;
 
@@ -80,13 +81,13 @@ public class FlightFragment extends Fragment{
 
     private boolean isValid(TextInputEditText source, TextInputEditText destination, TextInputEditText name,
                             TextInputEditText date, TextInputEditText mobile, TextInputEditText email) {
-        return !(CommonUtils.checkNullOrEmpty(source.toString())
+        return CommonUtils.checkNullOrEmpty(source.toString())
                 && CommonUtils.checkNullOrEmpty(destination.toString())
                 && CommonUtils.checkNullOrEmpty(name.toString())
                 && CommonUtils.checkNullOrEmpty(date.toString())
                 && CommonUtils.checkNullOrEmpty(mobile.toString())
                 && CommonUtils.checkNullOrEmpty(email.toString())
-                && CommonUtils.checkNullOrEmpty(mobile.toString()));
+                && CommonUtils.checkNullOrEmpty(mobile.toString());
     }
 
     private View.OnClickListener transferListener = new View.OnClickListener() {
@@ -100,7 +101,7 @@ public class FlightFragment extends Fragment{
 
     private void showSelectWalletFragment() {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
-                SelectWalletFragment.getInstance(VENDOR_WALLET_CODE, amount.getText().toString(), TRANSFER_REASON, FlightFragment.class.toString()),
+                SelectWalletFragment.getInstance(VENDOR_WALLET_CODE, "11000", PURCHASE_REASON, FlightFragment.class.toString()),
                 SelectWalletFragment.class.toString()).commit();
     }
 }

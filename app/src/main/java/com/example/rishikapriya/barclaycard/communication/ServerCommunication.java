@@ -127,6 +127,26 @@ public class ServerCommunication {
         ApplicationController.getInstance().getRequestQueue().add(jsonObjectRequest);
     }
 
+    public void addJSONPostRequestWithJSONObject(String url, final Map<String,String> headers, final JSONObject request,
+                                                 final WebResponseListener webResponseListener){
+
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        url,request,
+                        new ResponseListener(webResponseListener),
+                        new ErrorListener(webResponseListener)){
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        return headers;
+                    }
+
+                };
+
+        ApplicationController.getInstance().getRequestQueue().add(jsonObjectRequest);
+    }
+
     private String getStringFromRequest(Map<String, String> request) {
         Iterator iterator = request.entrySet().iterator();
         String request_string = "";
